@@ -1,0 +1,62 @@
+
+.main{
+    width:100%;
+    height:80vh;
+    display:flex;
+
+}
+.Allstock{
+    width:30%;
+    height:100%;
+    border-right: 2px solid black;
+    
+}
+.Cards{
+   width:70%;
+   height:100%;
+   overflow-y: scroll ;
+   scrollbar-width: none;
+   scroll-behavior: smooth;
+   
+   
+
+}
+.Cards ul{
+
+     display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+    padding: 0;
+    margin: 0;
+}
+.Cards ul li{
+    list-style: none;
+    
+}
+.Allstock{
+    padding:1% 1%;
+    
+
+}
+.flex{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+.grid{
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); 
+    gap: 10px; 
+}
+
+.Dashboard{
+    height:60px;
+    width: 90%;
+    margin:1% 2%;
+    padding: 1% 1%;
+    border: 1px solid rgba(162, 164, 235, 1);
+    border-radius: 2px;
+    box-sizing: border-box;
+    box-shadow: 0 0 4px 4px  rgba(162, 164, 235, 0.637);
+}
+
