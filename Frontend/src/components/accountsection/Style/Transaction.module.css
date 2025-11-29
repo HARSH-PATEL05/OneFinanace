@@ -1,0 +1,325 @@
+/* MAIN CONTAINER */
+.container {
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: 100%;
+  position: relative;
+}
+
+/* HEADER */
+.headerRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  background: white;
+  padding-bottom: 6px;
+  z-index: 200;
+}
+
+.titleBlock {
+  font-size: 25px;
+  font-weight: 700;
+}
+
+/* CLEAR ALL */
+.clearAllBtn {
+  padding: 6px 10px;
+  background: #ef4444;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+}
+.clearAllBtn:hover {
+  background: #dc2626;
+}
+
+/* DOWNLOAD */
+.downloadBtn {
+  padding: 8px 12px;
+  background: #1a73e8;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  border: none;
+  font-weight: 600;
+  z-index: 20;
+}
+
+/* =============== FILTER ROWS =============== */
+
+/* ROW 1 → SORT + CALENDAR */
+.filterRow1 {
+  display: flex;
+  justify-content: flex-start;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ROW 2 → FULL SEARCH BAR */
+.filterRow2 {
+  display: flex;
+  width: 100%;
+}
+
+/* FULL WIDTH SEARCH BAR */
+.searchFull {
+  flex: 1;
+  padding: 10px 12px;
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* CALENDAR BUTTON */
+.dateBtn {
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  background: #fff;
+  cursor: pointer;
+  font-size: 18px;
+  
+}
+.clearFilterBtn {
+  padding: 6px 10px;
+  background: #f3f4f6;
+  border: 1px solid #d0d7de;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 600;
+  color: #374151;
+  width:100px;
+  height:35px;
+}
+
+.clearFilterBtn:hover {
+  background: #e5e7eb;
+}
+
+
+/* SMALL SORT BOX */
+.sortSmall {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  font-size: 13px;
+  width: 200px;
+}
+
+/* LIST */
+.list {
+  overflow-y: auto;
+  height: calc(100% - 160px);
+  padding-right: 6px;
+}
+.list::-webkit-scrollbar {
+  display: none;
+}
+
+/* CARD WRAPPER */
+.cardWrapper {
+  position: relative;
+}
+
+/* CARD */
+.card {
+  padding: 12px;
+  background: white;
+  border-radius: 12px;
+  border: 1.7px solid #d0d7de;
+  margin-bottom: 12px;
+  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  cursor: pointer;
+  transition: 0.2s;
+}
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+}
+
+/* GRID */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr minmax(140px,140px);
+  gap: 8px;
+}
+.colRight { display: flex; justify-content: flex-end; }
+
+.bankName { font-size: 16px; font-weight: 700; }
+.txnType { font-weight: 700; }
+.creditAmount,.creditText {
+  color: #068525;   /* green */
+  font-weight: 600;
+}
+
+.debitAmount,.debitText {
+  color: #c30303;   /* red */
+  font-weight: 600;
+}
+
+
+.details {
+  font-size: 13px;
+  color: #374151;
+}
+
+.amount {
+  font-size: 18px;
+  font-weight: 800;
+}
+
+.balance {
+  font-size: 13px;
+  font-weight: 600;
+}
+
+/* FULL MODAL */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50000;
+}
+.modalBox {
+  background: white;
+  padding: 18px;
+  border-radius: 12px;
+  width: min(760px,90%);
+  max-height: 90vh;
+  overflow-y: auto;
+  position: relative;
+}
+.modalClose {
+  position: absolute;
+  right: 12px;
+  top: 12px;
+  background: #ef4444;
+  color: white;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* DOWNLOAD MODAL */
+.sectionOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  z-index: 8000;
+}
+
+.downloadCenterModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 240px;
+  padding: 16px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  z-index: 9000;
+}
+
+.centerClose {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ef4444;
+  border: none;
+  color: white;
+  padding: 4px 6px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.centerItem {
+  padding: 12px;
+  margin-top: 10px;
+  background: #f8fafc;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: center;
+  font-weight: 600;
+  transition: 0.2s;
+}
+.centerItem:hover {
+  background: #e2e8f0;
+}
+
+/* DATE MODAL */
+.dateModal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 320px;
+  padding: 16px;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  z-index: 9000;
+}
+
+.dateOption {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-top: 10px;
+  cursor: pointer;
+  font-weight: 600;
+  text-align: center;
+}
+.dateOption:hover {
+  background: #e2e8f0;
+}
+
+/* Custom date inputs */
+.dateInput {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  font-size: 13px;
+  width: 100%;
+}
+
+.btnApply {
+  padding: 10px;
+  background: #15803d;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  width: 100%;
+}
+
+.btnCancel {
+  padding: 10px;
+  background: #f3f4f6;
+  color: #111827;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  cursor: pointer;
+  width: 100%;
+}
+
+/* Responsive */
+@media (max-width: 720px) {
+  .grid { grid-template-columns: 1fr; }
+  .dateModal, .downloadCenterModal {
+    width: 92%;
+  }
+}

@@ -1,0 +1,261 @@
+/* ----------------------------------------------
+   MAIN WRAPPER – SCROLLABLE AREA
+---------------------------------------------- */
+.wrapper {
+  height: 70vh;
+  overflow-y: auto;
+  padding: 24px 50px;
+  scrollbar-width: none;
+}
+
+.wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* ----------------------------------------------
+   TITLES
+---------------------------------------------- */
+.title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: 800;
+  color: #111827;
+  margin-bottom: 22px;
+}
+
+.section {
+  width: 100%;
+  margin-bottom: 40px;
+}
+
+.sectionTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 16px;
+  border-left: 4px solid #4f8cff;
+  padding-left: 12px;
+}
+
+/* ----------------------------------------------
+   FIELD GRID – ALWAYS 3 CARDS / ROW
+---------------------------------------------- */
+.fieldGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+/* ----------------------------------------------
+   INPUT CARDS
+---------------------------------------------- */
+.card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-height: 90px;
+}
+
+.label {
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  letter-spacing: 0.03em;
+}
+
+.inputBox {
+  width: 100%;
+  padding: 10px 12px;
+  background: #f3f4f6;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  color: #111827;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  outline: none;
+  cursor: default;
+}
+
+/* ----------------------------------------------
+   PLACEHOLDER
+---------------------------------------------- */
+.placeholderText,
+.loading {
+  text-align: center;
+  font-size: 17px;
+  color: #6b7280;
+  margin-top: 30px;
+}
+
+/* ----------------------------------------------
+   3-CHART GRID – STRICT 3 PER ROW
+---------------------------------------------- */
+.chartGrid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  margin-top: 10px;
+}
+
+/* ----------------------------------------------
+   SMALL CHART CARDS
+---------------------------------------------- */
+.chartCard {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 14px 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.chartCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+}
+
+.chartTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #111827;
+  line-height: 1.3;
+}
+
+/* FIXED: CHART FULL-WIDTH */
+.chartCanvas {
+  width: 100%;
+  height: 240px;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.chartDescription {
+  font-size: 12px;
+  color: #4b5563;
+  line-height: 1.4;
+}
+
+/* ----------------------------------------------
+   SUMMARY BOX
+---------------------------------------------- */
+.summaryBox {
+  width: 100%;
+  min-height: 150px;
+  resize: vertical;
+  padding: 14px;
+  background: #f3f4f6;
+  border-radius: 12px;
+  font-size: 14px;
+  border: none;
+  outline: none;
+  line-height: 1.6;
+  color: #111827;
+}
+
+/* ----------------------------------------------
+   FULL SCREEN MODAL (CHART POPUP)
+---------------------------------------------- */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modalContent {
+  background: #ffffff;
+  width: min(95vw, 1050px);
+  max-height: 90vh;
+  border-radius: 18px;
+  padding: 22px 24px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.modalContent::-webkit-scrollbar {
+  display: none;
+}
+
+.modalClose {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: #ef4444;
+  color: #ffffff;
+  border: none;
+  border-radius: 999px;
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.modalTitle {
+  font-size: 20px;
+  font-weight: 700;
+  color: #111827;
+  margin-bottom: 12px;
+}
+
+/* FIXED FULLSCREEN CHART HEIGHT */
+.modalChartCanvas {
+  width: 100%;
+  height: 500px;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.modalDescription {
+  font-size: 14px;
+  color: #374151;
+  margin-top: 14px;
+  line-height: 1.5;
+}
+
+/* ----------------------------------------------
+   RESPONSIVE FIXES
+---------------------------------------------- */
+@media (max-width: 1150px) {
+  .fieldGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .chartGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 800px) {
+  .wrapper {
+    padding: 16px 18px;
+  }
+  .fieldGrid,
+  .chartGrid {
+    grid-template-columns: repeat(1, 1fr);
+  }
+  .modalChartCanvas {
+    height: 360px;
+  }
+}
+
+@media (max-width: 500px) {
+  .modalContent {
+    padding: 14px;
+  }
+}

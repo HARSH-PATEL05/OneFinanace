@@ -5,8 +5,12 @@ import json
 import logging
 import sys
 import traceback
+from typing import Any
 
+
+# ---------------------------------------------------------
 # Logger setup
+# ---------------------------------------------------------
 logger = logging.getLogger("database_util")
 logger.setLevel(logging.INFO)
 if not logger.hasHandlers():
@@ -17,6 +21,32 @@ if not logger.hasHandlers():
 logger.propagate = False
 
 
+# ---------------------------------------------------------
+# JSON helper (safe for SQLAlchemy JSON column)
+# ---------------------------------------------------------
+def safe_json(val: Any) -> dict:
+    """
+    Make sure additional_data is always a dict.
+    SQLAlchemy JSON = dict, not string.
+    """
+    if val is None:
+        return {}
+
+    if isinstance(val, dict):
+        return val
+
+    if isinstance(val, str):
+        try:
+            return json.loads(val)
+        except Exception:
+            return {"raw": val}
+
+    return {}
+
+
+# ---------------------------------------------------------
+# Save holdings
+# ---------------------------------------------------------
 def save_holdings_to_db(holdings_list, db=None):
     own_session = False
     if db is None:
@@ -28,13 +58,15 @@ def save_holdings_to_db(holdings_list, db=None):
         for h in holdings_list:
             try:
                 existing = db.query(Holding).filter_by(
-                    broker=h["broker"], symbol=h["symbol"]
+                    broker=h["broker"],
+                    symbol=h["symbol"]
                 ).first()
-                additional_data = json.dumps(h.get("additional_data", {}))
+
                 qty = int(h.get("Qty", 0))
                 average_price = float(h.get("average_price", 0))
                 Ltp = float(h.get("Ltp", 0))
                 prev_ltp = float(h.get("prev_ltp", 0))
+                extra = safe_json(h.get("additional_data"))
 
                 if existing:
                     existing.name = h["name"]
@@ -42,7 +74,7 @@ def save_holdings_to_db(holdings_list, db=None):
                     existing.average_price = average_price
                     existing.Ltp = Ltp
                     existing.prev_ltp = prev_ltp
-                    existing.additional_data = additional_data
+                    existing.additional_data = extra
                     updated += 1
                 else:
                     holding = Holding(
@@ -53,7 +85,7 @@ def save_holdings_to_db(holdings_list, db=None):
                         average_price=average_price,
                         Ltp=Ltp,
                         prev_ltp=prev_ltp,
-                        additional_data=additional_data
+                        additional_data=extra
                     )
                     db.add(holding)
                     added += 1
@@ -62,7 +94,9 @@ def save_holdings_to_db(holdings_list, db=None):
 
         if own_session:
             db.commit()
+
         logger.info(f"Holdings saved: {added} added, {updated} updated")
+
     except Exception as e:
         if own_session:
             db.rollback()
@@ -72,6 +106,9 @@ def save_holdings_to_db(holdings_list, db=None):
             db.close()
 
 
+# ---------------------------------------------------------
+# Save mutual funds
+# ---------------------------------------------------------
 def save_mfs_to_db(mfs_list, db=None):
     own_session = False
     if db is None:
@@ -83,19 +120,22 @@ def save_mfs_to_db(mfs_list, db=None):
         for mf in mfs_list:
             try:
                 existing = db.query(MutualFund).filter_by(
-                    broker=mf["broker"], symbol=mf["symbol"]
+                    broker=mf["broker"],
+                    symbol=mf["symbol"]
                 ).first()
-                additional_data = json.dumps(mf.get("additional_data", {}))
-                qty = int(mf.get("Qty", 0))
+
+                qty = float(mf.get("Qty", 0))
                 average_price = float(mf.get("average_price", 0))
                 Ltp = float(mf.get("Ltp", 0))
+                extra = safe_json(mf.get("additional_data"))
 
                 if existing:
                     existing.fund = mf["fund"]
                     existing.Qty = qty
                     existing.average_price = average_price
                     existing.Ltp = Ltp
-                    existing.additional_data = additional_data
+                    existing.prev_close = Ltp
+                    existing.additional_data = extra
                     updated += 1
                 else:
                     mutual_fund = MutualFund(
@@ -105,7 +145,8 @@ def save_mfs_to_db(mfs_list, db=None):
                         Qty=qty,
                         average_price=average_price,
                         Ltp=Ltp,
-                        additional_data=additional_data
+                        prev_close=Ltp,
+                        additional_data=extra
                     )
                     db.add(mutual_fund)
                     added += 1
@@ -114,7 +155,9 @@ def save_mfs_to_db(mfs_list, db=None):
 
         if own_session:
             db.commit()
+
         logger.info(f"Mutual funds saved: {added} added, {updated} updated")
+
     except Exception as e:
         if own_session:
             db.rollback()
@@ -124,6 +167,9 @@ def save_mfs_to_db(mfs_list, db=None):
             db.close()
 
 
+# ---------------------------------------------------------
+# Distinct brokers
+# ---------------------------------------------------------
 def get_all_brokers():
     db = SessionLocal()
     try:
@@ -132,21 +178,21 @@ def get_all_brokers():
             UNION
             SELECT DISTINCT broker FROM mutual_fund;
         """)
-        result = db.execute(query)
-        return [row[0] for row in result.fetchall()]
+        rows = db.execute(query).fetchall()
+        return [row[0] for row in rows]
     finally:
         db.close()
 
 
+# ---------------------------------------------------------
+# Get holdings
+# ---------------------------------------------------------
 def get_holdings_from_db(broker_name: str):
     db = SessionLocal()
     try:
         holdings = db.query(Holding).filter(Holding.broker == broker_name).all()
         result = []
         for h in holdings:
-            additional_data = h.additional_data
-            if isinstance(additional_data, str):
-                additional_data = json.loads(additional_data)
             result.append({
                 "id": h.id,
                 "broker": h.broker,
@@ -156,31 +202,32 @@ def get_holdings_from_db(broker_name: str):
                 "average_price": h.average_price,
                 "Ltp": h.Ltp,
                 "prev_ltp": h.prev_ltp,
-                "additional_data": additional_data or {}
+                "additional_data": safe_json(h.additional_data)
             })
         return result
     finally:
         db.close()
 
 
+# ---------------------------------------------------------
+# Get Mutual Funds
+# ---------------------------------------------------------
 def get_mfs_from_db(broker_name: str):
     db = SessionLocal()
     try:
         mfs = db.query(MutualFund).filter(MutualFund.broker == broker_name).all()
         result = []
         for mf in mfs:
-            additional_data = mf.additional_data
-            if isinstance(additional_data, str):
-                additional_data = json.loads(additional_data)
             result.append({
                 "id": mf.id,
                 "broker": mf.broker,
                 "symbol": mf.symbol,
                 "fund": mf.fund,
                 "Qty": mf.Qty,
+                "prev_close":mf.prev_close,
                 "average_price": mf.average_price,
                 "Ltp": mf.Ltp,
-                "additional_data": additional_data or {}
+                "additional_data": safe_json(mf.additional_data)
             })
         return result
     finally:

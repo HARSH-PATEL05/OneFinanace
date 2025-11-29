@@ -1,0 +1,67 @@
+[
+    {
+        "date": "2025-02-26",
+        "name": "Mahashivratri",
+        "day": "Wednesday"
+    },
+    {
+        "date": "2025-03-14",
+        "name": "Holi",
+        "day": "Friday"
+    },
+    {
+        "date": "2025-03-31",
+        "name": "Id-Ul-Fitr (Ramadan Eid)",
+        "day": "Monday"
+    },
+    {
+        "date": "2025-04-10",
+        "name": "Shri Mahavir Jayanti",
+        "day": "Thursday"
+    },
+    {
+        "date": "2025-04-14",
+        "name": "Dr. Baba Saheb Ambedkar Jayanti",
+        "day": "Monday"
+    },
+    {
+        "date": "2025-04-18",
+        "name": "Good Friday",
+        "day": "Friday"
+    },
+    {
+        "date": "2025-05-01",
+        "name": "Maharashtra Day",
+        "day": "Thursday"
+    },
+    {
+        "date": "2025-08-15",
+        "name": "Independence Day",
+        "day": "Friday"
+    },
+    {
+        "date": "2025-08-27",
+        "name": "Ganesh Chaturthi",
+        "day": "Wednesday"
+    },
+    {
+        "date": "2025-10-02",
+        "name": "Mahatma Gandhi Jayanti/Dussehra",
+        "day": "Thursday"
+    },
+    {
+        "date": "2025-10-22",
+        "name": "Diwali-Balipratipada",
+        "day": "Wednesday"
+    },
+    {
+        "date": "2025-11-05",
+        "name": "Prakash Gurpurb Sri Guru Nanak Dev",
+        "day": "Wednesday"
+    },
+    {
+        "date": "2025-12-25",
+        "name": "Christmas",
+        "day": "Thursday"
+    }
+]

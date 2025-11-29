@@ -1,0 +1,32 @@
+.main{
+    display:flex;
+    flex-direction: row;
+    height:100vh;
+}
+.bankname{
+    width:25%;
+    height:95vh;
+    border:1px solid black;
+}
+.chart{
+    width:50%;
+    height:95vh;
+    border:1px solid black;
+    overflow-y: scroll ;
+    -ms-overflow-style: none;  /* IE/Edge hide scrollbar */
+    scrollbar-width: none; 
+}
+.txn{
+    width:25%;
+    height:95vh;
+    border: 1px solid black;
+    overflow-y: scroll;
+    -ms-overflow-style: none;  /* IE/Edge hide scrollbar */
+    scrollbar-width: none; 
+}
+chart::-webkit-scrollbar {
+  display: none;   /* Chrome/Safari hide scrollbar */
+}
+txn::-webkit-scrollbar {
+  display: none;   /* Chrome/Safari hide scrollbar */
+}

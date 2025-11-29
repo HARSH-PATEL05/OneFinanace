@@ -1,0 +1,187 @@
+.main {
+  padding: 16px;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  color: #1f2937;
+}
+
+/* Controls row */
+.controlsRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+.rightControls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.label {
+  font-size: 13px;
+  margin-right: 6px;
+  color: #444;
+}
+.select, .smallSelect {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+  background: #fff;
+  font-size: 13px;
+}
+.customRange input[type="date"] {
+  padding: 6px 8px;
+  border-radius: 6px;
+  border: 1px solid #e5e7eb;
+}
+.rangeSep {
+  margin: 0 6px;
+  color: #666;
+}
+
+/* Heading + balance */
+.heading {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 6px 0 12px;
+}
+.balanceBox {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px;
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.06);
+  margin-bottom: 18px;
+}
+.balanceTitle {
+  font-size: 14px;
+  color: #444;
+  margin: 0 0 6px;
+}
+.balanceAmount {
+  font-size: 28px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* grid */
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 18px;
+}
+
+/* card */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  padding: 12px;
+  box-shadow: 0 2px 8px rgba(15,23,42,0.04);
+}
+.cardHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+.chartHeading {
+  font-size: 14px;
+  font-weight: 600;
+}
+.cardFilters {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.smallBtn {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: none;
+  background: #111827;
+  color: white;
+  cursor: pointer;
+  font-size: 13px;
+}
+.smallBtn:hover { opacity: 0.92; }
+.smallSelect { padding: 6px 8px; border-radius: 8px; font-size: 13px; }
+
+/* chart box */
+.chartBox {
+  width: 100%;
+  height: 240px;
+}
+
+/* Modal overlay */
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15,23,42,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+.modalCard {
+  width: 95%;
+  max-width: 1100px;
+  max-height: 90vh;
+  overflow: auto;
+  background: #fff;
+  border-radius: 12px;
+  padding: 18px;
+  position: relative;
+  box-shadow: 0 10px 30px rgba(2,6,23,0.3);
+}
+.modalCloseBtn {
+  position: absolute;
+  right: 14px;
+  top: 12px;
+  border: none;
+  background: #ef4444;
+  color: #fff;
+  padding: 6px 10px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 16px;
+}
+.modalTitle {
+  margin: 6px 0 12px;
+  font-size: 18px;
+  font-weight: 700;
+}
+.modalChartBox {
+  width: 100%;
+  height: 360px;
+  min-height: 360px;
+  display: block !important;
+  position: relative;        /* REQUIRED */
+  overflow: hidden;
+}
+
+
+/* modal table */
+.modalTableBox {
+  margin-top: 8px;
+}
+.detailTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+.detailTable th, .detailTable td {
+  padding: 8px 10px;
+  border-bottom: 1px solid #f1f5f9;
+  text-align: left;
+}
+.detailTable th {
+  background: #f8fafc;
+  font-weight: 600;
+}
+.noData {
+  padding: 18px;
+  color: #666;
+  font-size: 14px;
+  text-align: center;
+}

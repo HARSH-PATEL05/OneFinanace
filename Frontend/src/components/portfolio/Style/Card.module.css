@@ -20,3 +20,28 @@ span{
     margin:0 20px;
 }
 
+.green {
+  color: #0c8403;   /* soft green */
+  font-weight: 600;
+}
+
+.red {
+  color: #ee1111d4;   /* soft red */
+  font-weight: 600;
+}
+.brokerColorBox {
+  width: 80px;
+  height: 20px;
+  font-size: 13px;
+  border-radius: 3px;
+  margin-right: 6px;
+  text-align: center;
+  display: inline-block;
+  
+}
+
+.priceRow {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+}

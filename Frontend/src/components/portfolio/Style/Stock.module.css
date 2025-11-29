@@ -59,4 +59,15 @@
     box-sizing: border-box;
     box-shadow: 0 0 4px 4px  rgba(162, 164, 235, 0.637);
 }
+.green {
+  color: #0f8107;   /* soft green */
+  font-weight: 600;
+}
+
+.red {
+  color: #d90a0a;   /* soft red */
+  font-weight: 600;
+}
+
+
 

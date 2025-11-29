@@ -1,0 +1,276 @@
+.main {
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Add button row */
+.add {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  flex-direction: row-reverse;
+  margin-bottom: 8px;
+}
+
+.add button {
+  width: 40%;
+  height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #1a73e8;
+  color: white;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+/* No accounts */
+.noAcc {
+  margin-top: 20px;
+  text-align: center;
+  color: gray;
+}
+
+/* Accounts list */
+.list {
+  margin-top: 8px;
+}
+
+/* Account card */
+.accCard {
+  background: #f7f7f8;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 260ms ease;
+  border: 1px solid transparent;
+  box-shadow: 0 0 0 rgba(0,0,0,0);
+  padding: 6px;
+}
+
+/* Collapsed height ~50px */
+.accCard .row {
+  display: flex;
+  align-items: center;
+  height: 50px;
+}
+
+/* Expanded content hidden by default */
+.expanded {
+  max-height: 0;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: all 260ms ease;
+  padding: 0 6px;
+  font-size: 13px;
+  color: #333;
+}
+
+/* When open */
+.accCard.open {
+  border-color: #e0e7ff;
+  box-shadow: 0 6px 18px rgba(26, 115, 232, 0.08);
+  transform: translateY(-2px);
+}
+
+.accCard.open .expanded {
+  max-height: 100px; /* allow height for details */
+  opacity: 1;
+  transform: translateY(0px);
+  padding: 8px 6px 12px 6px;
+}
+
+/* Left section */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* acronym circle */
+.acronym {
+  width: 45px;
+  height: 45px;
+  background: #cfcfe3;
+  color: #1f1f1f;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  font-size: 15px;
+}
+
+/* basic info */
+.basicInfo {
+  display: flex;
+  flex-direction: column;
+}
+
+.bankName {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.accNumber {
+  font-size: 12px;
+  color: #666;
+}
+
+/* action buttons */
+.actions {
+  margin-left: auto;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background 150ms ease;
+}
+
+.iconBtn:hover {
+  background: rgba(0,0,0,0.04);
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 180ms ease;
+  z-index: 9999;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Modal */
+.modal {
+  width: 360px;
+  max-width: calc(100% - 40px);
+  background: #fff;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 18px 50px rgba(15, 23, 42, 0.12);
+  animation: slideUp 200ms ease;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(8px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+.modalTitle {
+  margin: 0 0 6px 0;
+  font-size: 18px;
+}
+
+/* modal body */
+.modalBody {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.label {
+  font-size: 13px;
+  color: #333;
+  margin-top: 6px;
+}
+
+.input {
+  width: 100%;
+  padding: 8px 10px;
+  font-size: 14px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  box-sizing: border-box;
+}
+
+/* modal footer */
+.modalFooter {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.cancelBtn {
+  padding: 8px 12px;
+  background: #9aa0a6;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+.confirmBtn {
+  padding: 8px 12px;
+  background: #1a73e8;
+  color: #fff;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+}
+
+/* error */
+.err {
+  color: #b00020;
+  font-size: 12px;
+  margin-top: -4px;
+  margin-bottom: 6px;
+}
+
+/* FILTER DROPDOWN FULL ROW */
+.filterContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 12px;
+}
+
+.filterLabel {
+  font-size: 14px;
+  margin-bottom: 4px;
+  color: #444;
+}
+
+.filterSelect {
+  width: 100%;
+  padding: 8px 10px;
+  border-radius: 8px;
+  border: 1px solid #d0d7de;
+  font-size: 14px;
+  cursor: pointer;
+  background: #fff;
+  outline: none;
+  box-sizing: border-box;
+  transition: all 0.2s ease;
+}
+
+.filterSelect:hover {
+  border-color: #1a73e8;
+}
+
+.filterSelect:focus {
+  border-color: #1a73e8;
+  box-shadow: 0 0 0 3px rgba(26,115,232,0.15);
+}

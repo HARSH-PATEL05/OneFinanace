@@ -8,7 +8,8 @@ import Home from './components/Home'
 import Error404 from './components/Error404'
 import Stock from './components/portfolio/Stock'
 import Mf from './components/portfolio/Mf'
-import Other from './components/portfolio/Others'
+import Fundamental from './components/sahayak-AI-ML/fundamental'
+import Analysis from './components/sahayak-AI-ML/Analysis'
 
 function App() {
   return (
@@ -37,13 +38,17 @@ function App() {
       <Routes>
         <Route path="/components/" element={<Home />} />
         <Route index element={<Home />} />
-        <Route path="/Sahayak" element={<Sahayak />} />
+        <Route path="/Sahayak" element={<Sahayak />} >
+          <Route path='Fundamental' element={<Fundamental />} />
+          <Route index element={<Fundamental />} />
+          <Route path='Analysis' element={<Analysis />} />
+        </Route>
         <Route path="/Contact" element={<Contact />} />
         <Route path="/Portfolio" element={<Portfolio />} >
           <Route path='Stock' element={<Stock />} />
           <Route index element={<Stock />} />
           <Route path='Mf' element={<Mf />} />
-          <Route path='Other' element={<Other />} />
+          
         </Route>
         <Route path="*" element={<Error404 />} />
 

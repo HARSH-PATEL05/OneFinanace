@@ -43,18 +43,32 @@ def login_post(
         return {"error": "Invalid broker"}
 
     if broker_name == "angelone":
-        if not all([client_code, mpin, totp_secret]):
-            return {"error": "client_code, mpin, totp_secret are required for Angel One"}
-        
-        broker.save_credentials({
-            "client_code": client_code,
-            "mpin": mpin,
-            "totp_secret": totp_secret
-        })
-        data = broker.generate_token()
-        if "error" in data:
-            return {"status": "error", "message": data["error"], "details": data.get("details")}
-        return {"data": data}
+        try:
+            if not all([client_code, mpin, totp_secret]):
+                 return JSONResponse({"status": "error", "message": "client_code, mpin,totp_secret        required"}, status_code=400)
+
+            broker.save_credentials({
+                "client_code": client_code,
+                "mpin": mpin,
+                "totp_secret": totp_secret
+            })
+
+        # Generate token immediately after saving credentials
+            token_data = broker.generate_token()
+            if "error" in token_data:
+                return JSONResponse({"status": "error", "message": token_data["error"]}, status_code=500)
+            # Directly call the callback route function
+            callback(
+                broker_name=broker_name,
+                request_token=token_data.get("request_token")
+            )
+            return JSONResponse({"status": "success", "token_data": token_data})
+
+        except Exception as e:
+            import traceback
+            traceback.print_exc()
+            return JSONResponse(content={"status": "error", "message": str(e)}, status_code=500)
+
 
     return RedirectResponse(url=broker.get_login_url())
 
@@ -82,7 +96,7 @@ def callback(broker_name: str, code: str = Query(None), request_token: str = Que
         fetch_and_save_holdings_for_broker(broker)
         fetch_and_save_mfs_for_broker(broker)
 
-        return RedirectResponse(url="http://127.0.0.1:8000")
+        return RedirectResponse(url="http://localhost:5173/Portfolio/Stock")
 
     except Exception as e:
         import traceback

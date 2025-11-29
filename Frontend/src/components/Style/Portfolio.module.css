@@ -25,6 +25,8 @@ nav{
     height:40px;
    padding-right: 30px;
     display: flex;
+    justify-content: space-between;
+    padding:0px 2% 0px 3%;
     flex-direction: row-reverse;
    align-items: center;
    background-color: rgba(172, 207, 240, 0.658);
@@ -89,3 +91,9 @@ nav{
   background: #e60000;
 }
 
+.justify{
+  display:flex;
+  flex-direction: row-reverse;
+  justify-content: space-between;
+
+}

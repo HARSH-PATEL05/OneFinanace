@@ -1,0 +1,108 @@
+.sahayakWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputBlock {
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.inputBlock input {
+  padding: 10px;
+  width: 250px;
+  font-size: 16px;
+  border-radius: 6px;
+  border: 1px solid #888;
+  margin-left: 40px;
+}
+
+.inputBlock button {
+  padding: 8px 18px;
+  background: #007bff;
+  border: none;
+  color: white;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 40px;
+}
+
+.errorText {
+  color: red;
+  font-size: 14px;
+}
+.sahayakWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.inputBlock {
+  margin-top: 20px;
+  display: flex;
+  gap: 10px;
+}
+
+.navBar {
+  margin-top: 20px;
+  display: flex;
+  gap: 20px;
+}
+
+
+
+.errorText {
+  color: red;
+  margin-top: 8px;
+  margin-left: 30px;
+}
+.link{
+    text-decoration: none;
+    color:white;
+    font-size: 20px;
+    font-weight: 300;
+}
+.activeLink {
+  color: #6ff02e;      /* Blue */
+  font-weight: 300;
+  text-decoration: none;
+  font-size: 20px;
+}
+.divider {
+  margin: 0 10px;
+  color: #020707;
+}
+.navBar {
+  margin-top: 15px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+
+
+
+
+
+
+/* Loader beside OK button */
+.loader {
+  margin-left: 50px;
+  width: 16px;
+  height: 16px;
+  border: 3px solid #ccc;
+  border-top: 3px solid #4f8cff;
+  border-radius: 50%;
+  display: inline-block;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
