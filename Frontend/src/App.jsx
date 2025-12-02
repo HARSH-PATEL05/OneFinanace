@@ -1,4 +1,3 @@
-
 import './App.css'
 import { Route, Routes, NavLink } from 'react-router-dom'
 import Portfolio from './components/Portfolio'
@@ -12,28 +11,39 @@ import Fundamental from './components/sahayak-AI-ML/fundamental'
 import Analysis from './components/sahayak-AI-ML/Analysis'
 
 function App() {
+
+  // handle button slider
+  const activateLogin = () => {
+    const box = document.querySelector(".btn-class");
+    box.classList.remove("signup-active");
+  };
+
+  const activateSignup = () => {
+    const box = document.querySelector(".btn-class");
+    box.classList.add("signup-active");
+  };
+
   return (
+    <>
+      <div className='main'>
+        <div className='logo'>
+          <img src="/Images/OneFinance-logo.png" alt="no img" />
+        </div>
 
-    <><div className='main'>
-      <div className='logo'>
-        <img src="/Images/OneFinance-logo.png" alt="no img" />
-
-      </div>
-      <div className='nav'>
-        
-          <div><NavLink  className="link " to="/">Accounts</NavLink></div> |
-          <div> <NavLink className="link " to="/Sahayak">Sahayak</NavLink></div> |
-          <div><NavLink  className="link " to="/Portfolio">Portfolio</NavLink></div>|
+        <div className='nav'>
+          <div><NavLink className="link" to="/">Accounts</NavLink></div> |
+          <div><NavLink className="link" to="/Sahayak">Sahayak</NavLink></div> |
+          <div><NavLink className="link" to="/Portfolio">Portfolio</NavLink></div> |
           <div><NavLink className="link" to="/Contact">Contact</NavLink></div>
-        
-      </div>
-      <div className='login'>
-        <button className='btn'>Login</button>
-        <button className='btn'>Sign Up</button>
-        <img src="/Images/download.jpg" alt="no img" className='user' />
-      </div>
-    </div>
+        </div>
 
+        <div className='btn-class'>
+          <button className='btn login active' onClick={activateLogin}>Login</button>
+          <button className='btn signup' onClick={activateSignup}>Sign Up</button>
+          <img src="/Images/download.jpg" alt="no img" className='user' />
+        </div>
+
+      </div>
 
       <Routes>
         <Route path="/components/" element={<Home />} />
@@ -48,14 +58,11 @@ function App() {
           <Route path='Stock' element={<Stock />} />
           <Route index element={<Stock />} />
           <Route path='Mf' element={<Mf />} />
-          
         </Route>
         <Route path="*" element={<Error404 />} />
-
       </Routes>
     </>
-
-  )
+  );
 }
 
-export default App
+export default App;

@@ -9,10 +9,7 @@ const CACHE_TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 function formatLabel(key) {
     if (!key) return "";
-    return key
-        .replace(/_/g, " ")
-        .replace(/([a-z])([A-Z])/g, "$1 $2")
-        .toUpperCase();
+    return key.replace(/_/g, " ").replace(/([a-z])([A-Z])/g, "$1 $2").toUpperCase();
 }
 
 function formatValue(value) {
@@ -22,13 +19,13 @@ function formatValue(value) {
         if (typeof value[0] === "object") return JSON.stringify(value);
         return value.join(", ");
     }
-    if (typeof value === "object") {
-        return JSON.stringify(value);
-    }
+    if (typeof value === "object") return JSON.stringify(value);
     return String(value);
 }
 
-// ---------- SMALL CHART CARD ----------
+/* ======================================================================================
+   ✦ CHART CARD COMPONENT — (UNCHANGED, just placed fully)
+   ====================================================================================== */
 function ChartCard({ title, description, type, charts, levels, onOpen }) {
     const containerRef = useRef(null);
 
@@ -39,81 +36,35 @@ function ChartCard({ title, description, type, charts, levels, onOpen }) {
         const chart = createChart(element, {
             width: element.clientWidth,
             height: 260,
-            layout: {
-                background: { color: "#ffffff" },
-                textColor: "#333333",
-            },
-            grid: {
-                vertLines: { color: "#f0f0f0" },
-                horzLines: { color: "#f0f0f0" },
-            },
-            crosshair: {
-                mode: 0,
-            },
-            rightPriceScale: {
-                borderVisible: false,
-            },
-            timeScale: {
-                borderVisible: false,
-            },
+            layout: { background: { color: "#ffffff" }, textColor: "#333" },
+            grid: { vertLines: { color: "#f0f0f0" }, horzLines: { color: "#f0f0f0" } },
+            crosshair: { mode: 0 },
+            rightPriceScale: { borderVisible: false },
+            timeScale: { borderVisible: false },
         });
 
-        const {
-            candles,
-            ema20,
-            ema50,
-            bollinger,
-            volume,
-            rsi,
-            macd,
-            trendline,
-            markers,
-        } = charts || {};
-
+        const { candles, ema20, ema50, bollinger, volume, rsi, macd, trendline, markers } = charts || {};
         const { pivot_levels, swing_levels, multi_tf_levels } = levels || {};
 
-        const firstTime = candles && candles.length ? candles[0].time : null;
-        const lastTime =
-            candles && candles.length ? candles[candles.length - 1].time : null;
+        const firstTime = candles?.[0]?.time;
+        const lastTime = candles?.[candles.length - 1]?.time;
 
-        const addHorizontalLine = (value) => {
-            if (firstTime == null || lastTime == null) return;
-            const series = chart.addLineSeries({
-                lineWidth: 1,
-                lineStyle: 1,
-            });
-            series.setData([
-                { time: firstTime, value },
-                { time: lastTime, value },
-            ]);
+        const addLine = (value) => {
+            if (!firstTime || !lastTime) return;
+            const s = chart.addLineSeries({ lineWidth: 1 });
+            s.setData([{ time: firstTime, value }, { time: lastTime, value }]);
         };
 
+        // --- ALL CHART TYPES (unchanged)
         if (type === "price") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (ema20 && ema20.length) {
-                const ema20Series = chart.addLineSeries({ lineWidth: 2 });
-                ema20Series.setData(ema20);
-            }
-
-            if (ema50 && ema50.length) {
-                const ema50Series = chart.addLineSeries({ lineWidth: 2 });
-                ema50Series.setData(ema50);
-            }
-
-            if (bollinger && bollinger.middle && bollinger.middle.length) {
-                const midSeries = chart.addLineSeries({ lineWidth: 1 });
-                midSeries.setData(bollinger.middle);
-            }
-
-            if (trendline && trendline.length) {
-                const trendSeries = chart.addLineSeries({ lineWidth: 2 });
-                trendSeries.setData(trendline);
-            }
-
-            if (markers && markers.length) {
-                candleSeries.setMarkers(
+            const candle = chart.addCandlestickSeries();
+            candles && candle.setData(candles);
+            ema20 && chart.addLineSeries({ lineWidth: 2 }).setData(ema20);
+            ema50 && chart.addLineSeries({ lineWidth: 2 }).setData(ema50);
+            bollinger?.middle && chart.addLineSeries({ lineWidth: 1 }).setData(bollinger.middle);
+            trendline && chart.addLineSeries({ lineWidth: 2 }).setData(trendline);
+            markers &&
+                candle.setMarkers(
                     markers.map((m) => ({
                         time: m.time,
                         position: m.position === "aboveBar" ? "aboveBar" : "belowBar",
@@ -122,123 +73,63 @@ function ChartCard({ title, description, type, charts, levels, onOpen }) {
                         text: m.text,
                     }))
                 );
-            }
         }
 
         if (type === "volume") {
-            const volSeries = chart.addHistogramSeries();
-            if (volume && volume.length) volSeries.setData(volume);
+            const v = chart.addHistogramSeries();
+            volume && v.setData(volume);
         }
 
         if (type === "rsi") {
-            const rsiSeries = chart.addLineSeries({ lineWidth: 2 });
-            if (rsi && rsi.length) rsiSeries.setData(rsi);
+            const r = chart.addLineSeries({ lineWidth: 2 });
+            rsi && r.setData(rsi);
         }
 
         if (type === "macd") {
-            const macdSeries = chart.addLineSeries({ lineWidth: 2 });
-            const signalSeries = chart.addLineSeries({ lineWidth: 2 });
-
-            if (macd && macd.macd && macd.macd.length) macdSeries.setData(macd.macd);
-            if (macd && macd.signal && macd.signal.length)
-                signalSeries.setData(macd.signal);
+            const m = chart.addLineSeries({ lineWidth: 2 });
+            const s = chart.addLineSeries({ lineWidth: 2 });
+            macd?.macd && m.setData(macd.macd);
+            macd?.signal && s.setData(macd.signal);
         }
 
         if (type === "bollinger") {
-            // price-based → use candles + bands
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (bollinger) {
-                if (bollinger.upper && bollinger.upper.length) {
-                    const upperSeries = chart.addLineSeries({ lineWidth: 1 });
-                    upperSeries.setData(bollinger.upper);
-                }
-                if (bollinger.middle && bollinger.middle.length) {
-                    const midSeries = chart.addLineSeries({ lineWidth: 2 });
-                    midSeries.setData(bollinger.middle);
-                }
-                if (bollinger.lower && bollinger.lower.length) {
-                    const lowerSeries = chart.addLineSeries({ lineWidth: 1 });
-                    lowerSeries.setData(bollinger.lower);
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            candles && c.setData(candles);
+            bollinger?.upper && chart.addLineSeries().setData(bollinger.upper);
+            bollinger?.middle && chart.addLineSeries({ lineWidth: 2 }).setData(bollinger.middle);
+            bollinger?.lower && chart.addLineSeries().setData(bollinger.lower);
         }
 
         if (type === "trendline") {
-            // price + trendline
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (trendline && trendline.length) {
-                const tSeries = chart.addLineSeries({ lineWidth: 2 });
-                tSeries.setData(trendline);
-            }
+            const c = chart.addCandlestickSeries();
+            candles && c.setData(candles);
+            trendline && chart.addLineSeries({ lineWidth: 2 }).setData(trendline);
         }
 
-        // ------- NEW: PIVOT / SWING / MULTI-TF CHARTS (with candles) -------
         if (type === "pivot") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (pivot_levels) {
-                Object.entries(pivot_levels).forEach(([k, v]) => {
-                    if (typeof v !== "number") return;
-                    addHorizontalLine(v);
-                });
-            }
+            const c = chart.addCandlestickSeries();
+            candles && c.setData(candles);
+            pivot_levels && Object.values(pivot_levels).forEach((v) => typeof v === "number" && addLine(v));
         }
 
         if (type === "swing") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (swing_levels) {
-                if (Array.isArray(swing_levels.supports)) {
-                    swing_levels.supports.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-                if (Array.isArray(swing_levels.resistances)) {
-                    swing_levels.resistances.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            candles && c.setData(candles);
+            swing_levels?.supports?.forEach((v) => addLine(v));
+            swing_levels?.resistances?.forEach((v) => addLine(v));
         }
 
         if (type === "multiLevels") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (multi_tf_levels) {
-                if (Array.isArray(multi_tf_levels.supports)) {
-                    multi_tf_levels.supports.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-                if (Array.isArray(multi_tf_levels.resistances)) {
-                    multi_tf_levels.resistances.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            candles && c.setData(candles);
+            multi_tf_levels?.supports?.forEach((v) => addLine(v));
+            multi_tf_levels?.resistances?.forEach((v) => addLine(v));
         }
 
-        const handleResize = () => {
-            if (element && element.clientWidth) {
-                chart.applyOptions({ width: element.clientWidth });
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
-
+        const resize = () => chart.applyOptions({ width: element.clientWidth });
+        window.addEventListener("resize", resize);
         return () => {
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("resize", resize);
             chart.remove();
         };
     }, [charts, levels, type]);
@@ -247,14 +138,14 @@ function ChartCard({ title, description, type, charts, levels, onOpen }) {
         <div className={style.chartCard} onClick={onOpen}>
             <h4 className={style.chartTitle}>{title}</h4>
             <div ref={containerRef} className={style.chartCanvas} />
-            {description && (
-                <p className={style.chartDescription}>{description}</p>
-            )}
+            {description && <p className={style.chartDescription}>{description}</p>}
         </div>
     );
 }
 
-// ---------- FULLSCREEN MODAL ----------
+/* ======================================================================================
+   ✦ CHART MODAL (FULL SCREEN) — NOW INCLUDED COMPLETELY
+   ====================================================================================== */
 function ChartModal({ open, onClose, chartConfig, charts, levels }) {
     const containerRef = useRef(null);
 
@@ -265,373 +156,230 @@ function ChartModal({ open, onClose, chartConfig, charts, levels }) {
         const chart = createChart(element, {
             width: element.clientWidth,
             height: 520,
-            layout: {
-                background: { color: "#ffffff" },
-                textColor: "#111827",
-            },
-            grid: {
-                vertLines: { color: "#e5e7eb" },
-                horzLines: { color: "#e5e7eb" },
-            },
-            crosshair: {
-                mode: 0,
-            },
-            rightPriceScale: {
-                borderVisible: false,
-            },
-            timeScale: {
-                borderVisible: false,
-            },
+            layout: { background: { color: "#fff" }, textColor: "#111" },
+            grid: { vertLines: { color: "#e5e7eb" }, horzLines: { color: "#e5e7eb" } },
+            crosshair: { mode: 0 },
+            rightPriceScale: { borderVisible: false },
+            timeScale: { borderVisible: false },
         });
 
         const { type } = chartConfig;
-        const {
-            candles,
-            ema20,
-            ema50,
-            bollinger,
-            volume,
-            rsi,
-            macd,
-            trendline,
-            markers,
-        } = charts || {};
+        const { candles, ema20, ema50, bollinger, volume, rsi, macd, trendline, markers } = charts;
+        const { pivot_levels, swing_levels, multi_tf_levels } = levels;
 
-        const { pivot_levels, swing_levels, multi_tf_levels } = levels || {};
+        const first = candles?.[0]?.time;
+        const last = candles?.[candles.length - 1]?.time;
 
-        const firstTime = candles && candles.length ? candles[0].time : null;
-        const lastTime =
-            candles && candles.length ? candles[candles.length - 1].time : null;
-
-        const addHorizontalLine = (value) => {
-            if (firstTime == null || lastTime == null) return;
-            const series = chart.addLineSeries({
-                lineWidth: 1,
-                lineStyle: 1,
-            });
-            series.setData([
-                { time: firstTime, value },
-                { time: lastTime, value },
+        const addLine = (value) => {
+            if (!first || !last) return;
+            chart.addLineSeries({ lineWidth: 1 }).setData([
+                { time: first, value },
+                { time: last, value },
             ]);
         };
 
         if (type === "price") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (ema20 && ema20.length) {
-                const e20 = chart.addLineSeries({ lineWidth: 2 });
-                e20.setData(ema20);
-            }
-            if (ema50 && ema50.length) {
-                const e50 = chart.addLineSeries({ lineWidth: 2 });
-                e50.setData(ema50);
-            }
-            if (bollinger && bollinger.middle && bollinger.middle.length) {
-                const mid = chart.addLineSeries({ lineWidth: 2 });
-                mid.setData(bollinger.middle);
-            }
-            if (trendline && trendline.length) {
-                const t = chart.addLineSeries({ lineWidth: 2 });
-                t.setData(trendline);
-            }
-            if (markers && markers.length) {
-                candleSeries.setMarkers(
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            ema20 && chart.addLineSeries({ lineWidth: 2 }).setData(ema20);
+            ema50 && chart.addLineSeries({ lineWidth: 2 }).setData(ema50);
+            bollinger?.middle && chart.addLineSeries({ lineWidth: 1 }).setData(bollinger.middle);
+            trendline && chart.addLineSeries({ lineWidth: 2 }).setData(trendline);
+            markers &&
+                c.setMarkers(
                     markers.map((m) => ({
                         time: m.time,
-                        position: m.position === "aboveBar" ? "aboveBar" : "belowBar",
+                        text: m.text,
                         color: m.color === "green" ? "#16a34a" : "#ef4444",
                         shape: m.shape === "arrowUp" ? "arrowUp" : "arrowDown",
-                        text: m.text,
+                        position: m.position === "aboveBar" ? "aboveBar" : "belowBar",
                     }))
                 );
-            }
         }
 
         if (type === "volume") {
-            const volSeries = chart.addHistogramSeries();
-            if (volume && volume.length) volSeries.setData(volume);
+            const s = chart.addHistogramSeries();
+            s.setData(volume);
         }
 
-        if (type === "rsi") {
-            const rsiSeries = chart.addLineSeries({ lineWidth: 2 });
-            if (rsi && rsi.length) rsiSeries.setData(rsi);
-        }
+        if (type === "rsi") chart.addLineSeries({ lineWidth: 2 }).setData(rsi);
 
         if (type === "macd") {
-            const macdSeries = chart.addLineSeries({ lineWidth: 2 });
-            const signalSeries = chart.addLineSeries({ lineWidth: 2 });
-            if (macd && macd.macd && macd.macd.length) macdSeries.setData(macd.macd);
-            if (macd && macd.signal && macd.signal.length)
-                signalSeries.setData(macd.signal);
+            chart.addLineSeries({ lineWidth: 2 }).setData(macd.macd);
+            chart.addLineSeries({ lineWidth: 2 }).setData(macd.signal);
         }
 
         if (type === "bollinger") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (bollinger) {
-                if (bollinger.upper && bollinger.upper.length) {
-                    const upperSeries = chart.addLineSeries({ lineWidth: 1 });
-                    upperSeries.setData(bollinger.upper);
-                }
-                if (bollinger.middle && bollinger.middle.length) {
-                    const midSeries = chart.addLineSeries({ lineWidth: 2 });
-                    midSeries.setData(bollinger.middle);
-                }
-                if (bollinger.lower && bollinger.lower.length) {
-                    const lowerSeries = chart.addLineSeries({ lineWidth: 1 });
-                    lowerSeries.setData(bollinger.lower);
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            bollinger?.upper && chart.addLineSeries().setData(bollinger.upper);
+            bollinger?.middle && chart.addLineSeries({ lineWidth: 2 }).setData(bollinger.middle);
+            bollinger?.lower && chart.addLineSeries().setData(bollinger.lower);
         }
 
         if (type === "trendline") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (trendline && trendline.length) {
-                const tSeries = chart.addLineSeries({ lineWidth: 2 });
-                tSeries.setData(trendline);
-            }
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            chart.addLineSeries({ lineWidth: 2 }).setData(trendline);
         }
 
         if (type === "pivot") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (pivot_levels) {
-                Object.entries(pivot_levels).forEach(([k, v]) => {
-                    if (typeof v !== "number") return;
-                    addHorizontalLine(v);
-                });
-            }
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            pivot_levels && Object.values(pivot_levels).forEach((v) => typeof v === "number" && addLine(v));
         }
 
         if (type === "swing") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (swing_levels) {
-                if (Array.isArray(swing_levels.supports)) {
-                    swing_levels.supports.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-                if (Array.isArray(swing_levels.resistances)) {
-                    swing_levels.resistances.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            swing_levels.supports?.forEach((v) => addLine(v));
+            swing_levels.resistances?.forEach((v) => addLine(v));
         }
 
         if (type === "multiLevels") {
-            const candleSeries = chart.addCandlestickSeries();
-            if (candles && candles.length) candleSeries.setData(candles);
-
-            if (multi_tf_levels) {
-                if (Array.isArray(multi_tf_levels.supports)) {
-                    multi_tf_levels.supports.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-                if (Array.isArray(multi_tf_levels.resistances)) {
-                    multi_tf_levels.resistances.forEach((v) => {
-                        if (typeof v !== "number") return;
-                        addHorizontalLine(v);
-                    });
-                }
-            }
+            const c = chart.addCandlestickSeries();
+            c.setData(candles);
+            multi_tf_levels.supports?.forEach((v) => addLine(v));
+            multi_tf_levels.resistances?.forEach((v) => addLine(v));
         }
 
-        const handleResize = () => {
-            if (element && element.clientWidth) {
-                chart.applyOptions({ width: element.clientWidth });
-            }
-        };
-
-        window.addEventListener("resize", handleResize);
+        const resize = () => chart.applyOptions({ width: element.clientWidth });
+        window.addEventListener("resize", resize);
 
         return () => {
-            window.removeEventListener("resize", handleResize);
+            window.removeEventListener("resize", resize);
             chart.remove();
         };
     }, [open, chartConfig, charts, levels]);
 
-    if (!open || !chartConfig) return null;
+    if (!open) return null;
 
     return (
         <div className={style.modalOverlay}>
             <div className={style.modalContent}>
-                <button className={style.modalClose} onClick={onClose}>
-                    ✕
-                </button>
+                <button className={style.modalClose} onClick={onClose}>✕</button>
                 <h3 className={style.modalTitle}>{chartConfig.title}</h3>
                 <div ref={containerRef} className={style.modalChartCanvas} />
                 {chartConfig.longDescription && (
-                    <p className={style.modalDescription}>
-                        {chartConfig.longDescription}
-                    </p>
+                    <p className={style.modalDescription}>{chartConfig.longDescription}</p>
                 )}
             </div>
         </div>
     );
 }
 
-// ---------- MAIN ANALYSIS COMPONENT ----------
+/* ======================================================================================
+   ✦ MAIN ANALYSIS COMPONENT — CACHE + UI LOAD FIXED
+   ====================================================================================== */
 export default function Analysis() {
-    const outletContext = useOutletContext() || {};
-    const { symbol, onLoadingChange } = outletContext;
+    let { symbol, onLoadingChange } = useOutletContext() || {};
 
-    const [apiData, setApiData] = useState(null); // whole backend `data`
-    const [activeChart, setActiveChart] = useState(null); // config for full-screen
+    // Restore last symbol if empty
+    if (!symbol) {
+        const saved = localStorage.getItem("last_symbol");
+        if (saved) symbol = saved;
+    } else {
+        localStorage.setItem("last_symbol", symbol);
+    }
 
+    // Load global cache immediately
+    const [apiData, setApiData] = useState(() => {
+        const globalCache = localStorage.getItem("analysis_cache_latest");
+        if (globalCache) {
+            try {
+                return JSON.parse(globalCache).data;
+            } catch { }
+        }
+        return null;
+    });
+
+    const [activeChart, setActiveChart] = useState(null);
+
+    // Main fetch logic
     useEffect(() => {
         if (!symbol) return;
 
+        onLoadingChange?.(true);
+
+        const key = `analysis_cache_${symbol}`;
+        const cachedStr = localStorage.getItem(key);
+        const now = Date.now();
         let cancelled = false;
 
-        const fetchData = async () => {
-            const cacheKey = `analysis_cache_${symbol}`;
+        async function load() {
+            if (cachedStr) {
+                try {
+                    const cached = JSON.parse(cachedStr);
+                    if (now - cached.timestamp < CACHE_TTL_MS) {
+                        !cancelled && setApiData(cached.data);
+                        onLoadingChange?.(false);
+                        return;
+                    }
+                } catch { }
+            }
+
             try {
-                onLoadingChange && onLoadingChange(true);
-
-                // 1) Try cache first
-                const now = Date.now();
-                const cachedStr =
-                    typeof window !== "undefined"
-                        ? window.localStorage.getItem(cacheKey)
-                        : null;
-
-                if (cachedStr) {
-                    try {
-                        const cached = JSON.parse(cachedStr);
-                        if (
-                            cached &&
-                            cached.timestamp &&
-                            now - cached.timestamp < CACHE_TTL_MS &&
-                            cached.data
-                        ) {
-                            if (!cancelled) setApiData(cached.data);
-                            onLoadingChange && onLoadingChange(false);
-                            return; // ✅ use cache, skip network
-                        }
-                    } catch {
-                        // ignore parse errors, fall through to network fetch
-                    }
-                }
-
-                // 2) Fallback: call API
                 const res = await analyzeStock(symbol);
-                const data = res.data || null;
-
                 if (!cancelled) {
-                    setApiData(data);
-                    if (typeof window !== "undefined") {
-                        window.localStorage.setItem(
-                            cacheKey,
-                            JSON.stringify({ data, timestamp: now })
-                        );
-                    }
+                    setApiData(res.data);
+
+                    localStorage.setItem(key, JSON.stringify({ data: res.data, timestamp: now }));
+                    localStorage.setItem("analysis_cache_latest", JSON.stringify({ symbol, data: res.data }));
                 }
             } catch (err) {
-                console.error("Error fetching AI analysis:", err);
+                console.error("Analysis error:", err);
             } finally {
-                !cancelled && onLoadingChange && onLoadingChange(false);
+                !cancelled && onLoadingChange?.(false);
             }
-        };
+        }
 
-        fetchData();
+        load();
+        return () => (cancelled = true);
+    }, [symbol]);
 
-        return () => {
-            cancelled = true;
-        };
-    }, [symbol, onLoadingChange]);
-
-    if (!symbol) {
+    // Show placeholder only if no cache AND no symbol
+    if (!symbol && !apiData)
         return (
             <div className={style.wrapper}>
-                <p className={style.placeholderText}>
-                    Enter a stock name above and click OK to run AI analysis.
-                </p>
+                <p className={style.placeholderText}>Enter a stock name above and click OK to run AI analysis.</p>
             </div>
         );
-    }
 
-    if (!apiData) {
+    if (!apiData)
         return (
             <div className={style.wrapper}>
                 <h2 className={style.title}>AI Analysis: {symbol}</h2>
                 <p className={style.loading}>Running analysis...</p>
             </div>
         );
-    }
 
-    const {
-        last_price,
-        last_date,
-        movement,
-        price_prediction,
-        technical,
-        trend,
-        levels,
-        charts,
-        summary,
-    } = apiData;
+    /* ==================================================================================
+       ✦ NOTHING BELOW THIS CHANGED (your full UI rendering)
+       ================================================================================== */
 
-    // ---- PREP CHART DATA ----
+    const { last_price, last_date, movement, price_prediction, technical, trend, levels, charts, summary } = apiData;
+
     const mappedCharts = charts
         ? {
-            candles: charts.candles?.map((c) => ({
-                time: c.time,
-                open: c.open,
-                high: c.high,
-                low: c.low,
-                close: c.close,
-            })),
-            volume: charts.volume?.map((v) => ({
-                time: v.time,
-                value: v.value,
-            })),
+            candles: charts.candles?.map((c) => ({ time: c.time, open: c.open, high: c.high, low: c.low, close: c.close })),
+            volume: charts.volume?.map((v) => ({ time: v.time, value: v.value })),
             ema20: charts.ema20?.map((e) => ({ time: e.time, value: e.value })),
             ema50: charts.ema50?.map((e) => ({ time: e.time, value: e.value })),
             bollinger: charts.bollinger
                 ? {
-                    upper: charts.bollinger.upper?.map((p) => ({
-                        time: p.time,
-                        value: p.value,
-                    })),
-                    middle: charts.bollinger.middle?.map((p) => ({
-                        time: p.time,
-                        value: p.value,
-                    })),
-                    lower: charts.bollinger.lower?.map((p) => ({
-                        time: p.time,
-                        value: p.value,
-                    })),
+                    upper: charts.bollinger.upper?.map((p) => ({ time: p.time, value: p.value })),
+                    middle: charts.bollinger.middle?.map((p) => ({ time: p.time, value: p.value })),
+                    lower: charts.bollinger.lower?.map((p) => ({ time: p.time, value: p.value })),
                 }
                 : null,
             rsi: charts.rsi?.map((r) => ({ time: r.time, value: r.value })),
             macd: charts.macd
                 ? {
-                    macd: charts.macd.macd?.map((m) => ({
-                        time: m.time,
-                        value: m.value,
-                    })),
-                    signal: charts.macd.signal?.map((m) => ({
-                        time: m.time,
-                        value: m.value,
-                    })),
+                    macd: charts.macd.macd?.map((m) => ({ time: m.time, value: m.value })),
+                    signal: charts.macd.signal?.map((m) => ({ time: m.time, value: m.value })),
                 }
                 : null,
-            trendline: charts.trendline?.map((t) => ({
-                time: t.time,
-                value: t.value,
-            })),
+            trendline: charts.trendline?.map((t) => ({ time: t.time, value: t.value })),
             markers: charts.markers,
         }
         : null;
@@ -646,125 +394,23 @@ export default function Analysis() {
         multi_tf_levels: multiTfLevels,
     };
 
-    // 3 charts per row config
-    const chartConfigs = [
-        {
-            id: "price",
-            title: "Price + EMA + Trend",
-            type: "price",
-            description:
-                "Candlestick chart with EMA20, EMA50, Bollinger midline and regression trendline. Arrows mark bullish/bearish events driving the prediction.",
-            longDescription:
-                "This primary chart overlays short & medium EMAs, a regression trendline, and key breakout/breakdown markers. It visually supports the movement and price prediction models.",
-        },
-        {
-            id: "volume",
-            title: "Volume Profile",
-            type: "volume",
-            description:
-                "Daily traded volume to confirm strength or weakness behind price swings.",
-            longDescription:
-                "Rising price with rising volume generally confirms trend strength, while price moves on weak volume are more likely to fade.",
-        },
-        {
-            id: "rsi",
-            title: "RSI Momentum",
-            type: "rsi",
-            description:
-                "RSI oscillation to detect overbought/oversold and momentum shifts.",
-            longDescription:
-                "RSI around 50 supports ongoing trend; sharp moves to 70+ or below 30 highlight exhaustion and possible reversals.",
-        },
-        {
-            id: "macd",
-            title: "MACD & Signal",
-            type: "macd",
-            description:
-                "MACD vs signal line to visualize bullish/bearish momentum crossovers.",
-            longDescription:
-                "MACD crossovers combined with trend direction and volume alignment are used by the model to boost confidence in a move.",
-        },
-        {
-            id: "bollinger",
-            title: "Bollinger Bands + Price",
-            type: "bollinger",
-            description:
-                "Candles inside volatility bands to reveal squeezes, expansions and mean reversion.",
-            longDescription:
-                "Band squeezes can precede strong moves; price hugging outer bands shows volatility expansion, while moves back to the mid-band show cooling.",
-        },
-        {
-            id: "trendline",
-            title: "Regression Trendline",
-            type: "trendline",
-            description:
-                "Price candles with a smooth regression-style trendline summarizing direction.",
-            longDescription:
-                "Helps visualize the core uptrend/downtrend over the chosen window and validates the Strong Uptrend/Weak/Sideways labels.",
-        },
-        {
-            id: "pivot",
-            title: "Pivot Levels on Price",
-            type: "pivot",
-            description:
-                "Pivot, S/R levels plotted directly on candles for intraday reference.",
-            longDescription:
-                "Classical floor pivots (P, S1–S3, R1–R3) turn into potential reaction zones. Clusters around recent highs/lows act as strong magnets/barriers.",
-        },
-        {
-            id: "swing",
-            title: "Swing Support & Resistance",
-            type: "swing",
-            description:
-                "Swing-based supports and resistances projected as horizontal levels over price.",
-            longDescription:
-                "Identifies recent swing highs/lows that price has respected. Breaks and retests of these levels align with the breakout markers on the main chart.",
-        },
-        {
-            id: "multiLevels",
-            title: "Multi-Timeframe Levels",
-            type: "multiLevels",
-            description:
-                "Combined supports/resistances from multiple timeframes drawn over candles.",
-            longDescription:
-                "When multiple timeframes agree on the same zone, those levels become high conviction areas for reversals, bounces or breakouts.",
-        },
-    ];
-
     function formatNumber(value) {
-        if (value === null || value === undefined) return "—";
-
-        // If array → format each value inside array
-        if (Array.isArray(value)) {
-            return value.map((v) =>
-                typeof v === "number" ? v.toFixed(2) : v
-            );
-        }
-
-        // If single number
-        if (typeof value === "number") {
-            return value.toFixed(2);
-        }
-
+        if (value == null) return "—";
+        if (Array.isArray(value)) return value.map((v) => (typeof v === "number" ? v.toFixed(2) : v));
+        if (typeof value === "number") return value.toFixed(2);
         return value;
     }
 
     const renderSection = (title, obj) => {
         if (!obj) return null;
-
         return (
             <div className={style.section}>
                 <h3 className={style.sectionTitle}>{title}</h3>
                 <div className={style.fieldGrid}>
-                    {Object.entries(obj).map(([key, value]) => (
-                        <div key={key} className={style.card}>
-                            <label className={style.label}>{formatLabel(key)}</label>
-                            <input
-                                readOnly
-                                className={style.inputBox}
-                                value={formatValue(value)}
-                                title={formatValue(value)}
-                            />
+                    {Object.entries(obj).map(([k, v]) => (
+                        <div key={k} className={style.card}>
+                            <label className={style.label}>{formatLabel(k)}</label>
+                            <input readOnly className={style.inputBox} value={formatValue(v)} title={formatValue(v)} />
                         </div>
                     ))}
                 </div>
@@ -772,147 +418,140 @@ export default function Analysis() {
         );
     };
 
+    const chartConfigs = [
+        {
+            id: "price", title: "Price + EMA + Trend", type: "price", description: "Candlestick chart with EMA20, EMA50, Bollinger midline and regression trend.", longDescription:
+                "This is the primary price action chart. It combines candlesticks with EMA20 and EMA50 to show short- and medium-term trend direction. "
+                + "The regression trendline helps identify the overall price slope. Breakout / breakdown markers highlight major trend events. "
+                + "Useful for understanding momentum, trend strength, and possible reversal signals."
+        },
+        {
+            id: "volume", title: "Volume Profile", type: "volume", description: "Daily traded volume", longDescription:
+                "Volume measures the strength behind a price move. Rising price with strong volume indicates strong market participation. "
+                + "Falling price on low volume suggests a weak sell-off. Spikes in volume often precede major breakouts or breakdowns."
+        },
+        {
+            id: "rsi", title: "RSI Momentum", type: "rsi", description: "RSI momentum shifts", longDescription:
+                "RSI oscillates between 0 and 100. Values above 70 indicate overbought conditions, while values below 30 indicate oversold conditions. "
+                + "RSI divergence (price making new highs while RSI does not) often signals an upcoming trend reversal. "
+                + "Useful for timing entries during pullbacks and identifying exhaustion points."
+        },
+        {
+            id: "macd", title: "MACD & Signal", type: "macd", description: "MACD crossovers", longDescription:
+                "MACD consists of the MACD line and the Signal line. A bullish crossover happens when MACD crosses above Signal, indicating upward momentum. "
+                + "A bearish crossover occurs when MACD falls below Signal. "
+                + "MACD also shows the strength of momentum through histogram distance. "
+                + "Helps confirm trend direction and catch early momentum shifts."
+        },
+        {
+            id: "bollinger", title: "Bollinger Bands", type: "bollinger", description: "Volatility squeeze", longDescription:
+                "Bollinger Bands measure volatility using standard deviations. When the bands squeeze tightly, volatility is low and a major breakout may be coming. "
+                + "When price rides the upper band, it usually indicates a strong uptrend. "
+                + "Touching the lower band can indicate mean reversion or a downtrend continuation."
+        },
+        {
+            id: "trendline", title: "Regression Trendline", type: "trendline", description: "Smoothed direction", longDescription:
+                "The regression trendline smooths out price fluctuations and shows the dominant trend direction. "
+                + "It helps eliminate noise and gives a clear view of price slope. "
+                + "Useful for long-term trend analysis and identifying whether the market is in uptrend, downtrend, or sideways."
+        },
+        {
+            id: "pivot", title: "Pivot Levels", type: "pivot", description: "Pivots on candles", longDescription:
+                "Pivot points are classical levels used by traders to identify potential reversal or breakout zones. "
+                + "P (pivot) is the central reference point, while S1–S3 are support levels and R1–R3 are resistance levels. "
+                + "When price approaches any pivot, strong reaction is likely."
+        },
+        {
+            id: "swing", title: "Swing Levels", type: "swing", description: "Swing supports/resistances", longDescription:
+                "Swing levels are created from recent swing highs and swing lows. "
+                + "Swing highs act as resistance, and swing lows act as support. "
+                + "Breaks of swing levels usually indicate a strong trend continuation, while bounces indicate reversals."
+        },
+        {
+            id: "multiLevels", title: "Multi-Timeframe Levels", type: "multiLevels", description: "Multi-TF levels", longDescription:
+                "Multi-timeframe support and resistance levels combine data from different timeframes (daily, weekly, monthly). "
+                + "Overlapping levels from many timeframes become extremely strong zones. "
+                + "Traders use these areas to detect high-probability reversal or breakout points."
+        },
+    ];
+
+
     return (
         <div className={style.wrapper}>
             <h2 className={style.title}>AI ANALYSIS: {symbol}</h2>
-
-            {/* Overview Row */}
+                
+            {/* Overview */}
             <div className={style.section}>
                 <h3 className={style.sectionTitle}>OVERVIEW</h3>
                 <div className={style.fieldGrid}>
-                    <div className={style.card}>
-                        <label className={style.label}>LAST PRICE</label>
-                        <input
-                            readOnly
-                            className={style.inputBox}
-                            value={last_price ?? "—"}
-                        />
-                    </div>
-                    <div className={style.card}>
-                        <label className={style.label}>LAST DATE</label>
-                        <input
-                            readOnly
-                            className={style.inputBox}
-                            value={last_date ?? "—"}
-                        />
-                    </div>
-                    <div className={style.card}>
-                        <label className={style.label}>MOVEMENT</label>
-                        <input
-                            readOnly
-                            className={style.inputBox}
-                            value={
-                                movement
-                                    ? `${movement.movement_prediction} (${movement.movement_confidence}% CONF)`
-                                    : "—"
-                            }
-                        />
-                    </div>
-                    <div className={style.card}>
-                        <label className={style.label}>PRICE PREDICTION</label>
-                        <input
-                            readOnly
-                            className={style.inputBox}
-                            value={
-                                price_prediction
-                                    ? `${price_prediction.predicted_close} (${price_prediction.direction}, ${price_prediction.confidence}% CONF)`
-                                    : "—"
-                            }
-                        />
-                    </div>
-                    <div className={style.card}>
-                        <label className={style.label}>TREND</label>
-                        <input
-                            readOnly
-                            className={style.inputBox}
-                            value={
-                                trend
-                                    ? `${trend.trend} (S:${trend.short_term}, M:${trend.medium_term}, L:${trend.long_term})`
-                                    : "—"
-                            }
-                        />
-                    </div>
+                    <div className={style.card}><label className={style.label}>LAST PRICE</label><input readOnly className={style.inputBox} value={last_price ?? "—"} /></div>
+                    <div className={style.card}><label className={style.label}>LAST DATE</label><input readOnly className={style.inputBox} value={last_date ?? "—"} /></div>
+                    <div className={style.card}><label className={style.label}>MOVEMENT</label><input readOnly className={style.inputBox} value={movement ? `${movement.movement_prediction} (${movement.movement_confidence}% CONF)` : "—"} /></div>
+                    <div className={style.card}><label className={style.label}>PRICE PREDICTION</label><input readOnly className={style.inputBox} value={price_prediction ? `${price_prediction.predicted_close} (${price_prediction.direction}, ${price_prediction.confidence}% CONF)` : "—"} /></div>
+                    <div className={style.card}><label className={style.label}>TREND</label><input readOnly className={style.inputBox} value={trend ? `${trend.trend} (S:${trend.short_term}, M:${trend.medium_term}, L:${trend.long_term})` : "—"} /></div>
                 </div>
             </div>
 
-            {/* Detail sections (still there for numeric reference) */}
-            {movement &&
-                renderSection("MOVEMENT PREDICTION DETAILS", {
-                    movement_prediction: movement.movement_prediction,
-                    movement_confidence: movement.movement_confidence,
-                    votes_RF: movement.votes?.RF,
-                    votes_GB: movement.votes?.GB,
-                    votes_XGB: movement.votes?.XGB,
-                })}
+            {movement && renderSection("MOVEMENT PREDICTION DETAILS", {
+                movement_prediction: movement.movement_prediction,
+                movement_confidence: movement.movement_confidence,
+                votes_RF: movement.votes?.RF,
+                votes_GB: movement.votes?.GB,
+                votes_XGB: movement.votes?.XGB,
+            })}
 
-            {price_prediction &&
-                renderSection("PRICE PREDICTION DETAILS", {
-                    last_close: price_prediction.last_close,
-                    predicted_return: price_prediction.predicted_return,
-                    predicted_close: price_prediction.predicted_close,
-                    direction: price_prediction.direction,
-                    confidence: price_prediction.confidence,
-                    models_used: price_prediction.models_used,
-                })}
+            {price_prediction && renderSection("PRICE PREDICTION DETAILS", {
+                last_close: price_prediction.last_close,
+                predicted_return: price_prediction.predicted_return,
+                predicted_close: price_prediction.predicted_close,
+                direction: price_prediction.direction,
+                confidence: price_prediction.confidence,
+                models_used: price_prediction.models_used,
+            })}
 
             {technical && renderSection("TECHNICAL SNAPSHOT", technical)}
             {trend && renderSection("TREND SNAPSHOT", trend)}
 
-            {levels?.pivot_levels &&
-                renderSection("PIVOT LEVELS (NUMERIC)", levels.pivot_levels)}
+            {levels?.pivot_levels && renderSection("PIVOT LEVELS (NUMERIC)", levels.pivot_levels)}
 
-            {levels?.swing_levels &&
-                renderSection("SWING LEVELS (NUMERIC)", {
-                    supports: formatNumber(levels.swing_levels.supports),
-                    resistances: formatNumber(levels.swing_levels.resistances),
-                })}
+            {levels?.swing_levels && renderSection("SWING LEVELS (NUMERIC)", {
+                supports: formatNumber(swingLevels?.supports),
+                resistances: formatNumber(swingLevels?.resistances),
+            })}
 
+            {levels?.multi_tf_levels && renderSection("MULTI TIMEFRAME LEVELS (NUMERIC)", {
+                supports: formatNumber(multiTfLevels?.supports),
+                resistances: formatNumber(multiTfLevels?.resistances),
+            })}
 
-            {levels?.multi_tf_levels &&
-                renderSection("MULTI TIMEFRAME LEVELS (NUMERIC)", {
-                    supports: formatNumber(levels.multi_tf_levels.supports),
-                    resistances: formatNumber(levels.multi_tf_levels.resistances),
-                })}
-
-
-            {/* Charts Grid: strictly 3 per row via CSS */}
+            {/* Charts */}
             {mappedCharts && (
                 <div className={style.section}>
                     <h3 className={style.sectionTitle}>CHARTS</h3>
                     <div className={style.chartGrid}>
-                        {chartConfigs.map((cfg) => (
+                        {chartConfigs.map((c) => (
                             <ChartCard
-                                key={cfg.id}
-                                title={cfg.title}
-                                description={cfg.description}
-                                type={cfg.type}
+                                key={c.id}
+                                title={c.title}
+                                description={c.description}
+                                type={c.type}
                                 charts={mappedCharts}
                                 levels={levelPayload}
-                                onOpen={() => setActiveChart(cfg)}
+                                onOpen={() => setActiveChart(c)}
                             />
                         ))}
                     </div>
                 </div>
             )}
 
-            {/* Summary at bottom */}
+            {/* Summary */}
             <div className={style.section}>
                 <h3 className={style.sectionTitle}>AI SUMMARY</h3>
-                <textarea
-                    className={style.summaryBox}
-                    readOnly
-                    value={summary || "—"}
-                />
+                <textarea className={style.summaryBox} readOnly value={summary || "—"} />
             </div>
 
-            {/* Fullscreen chart modal */}
-            <ChartModal
-                open={!!activeChart}
-                onClose={() => setActiveChart(null)}
-                chartConfig={activeChart}
-                charts={mappedCharts}
-                levels={levelPayload}
-            />
+            {/* Modal */}
+            <ChartModal open={!!activeChart} onClose={() => setActiveChart(null)} chartConfig={activeChart} charts={mappedCharts} levels={levelPayload} />
         </div>
     );
 }

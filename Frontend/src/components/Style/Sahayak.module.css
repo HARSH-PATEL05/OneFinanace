@@ -1,108 +1,169 @@
+/* ============ WRAPPER ============ */
 .sahayakWrapper {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
+  position: relative;
+  z-index: 10;
 }
 
+/* ============ INPUT BLOCK ============ */
 .inputBlock {
   margin-top: 30px;
   display: flex;
   flex-direction: column;
   gap: 10px;
   align-items: center;
+
+  /* same width as input & dropdown */
 }
 
+/* Input styling */
 .inputBlock input {
-  padding: 10px;
+  padding: 12px;
   width: 250px;
   font-size: 16px;
-  border-radius: 6px;
-  border: 1px solid #888;
-  margin-left: 40px;
+  border-radius: 10px;
+  border: 1.5px solid #b3b3b3;
+  transition: 0.25s ease;
+  background: #ffffff;
 }
 
+.inputBlock input:focus {
+  outline: none;
+  border-color: #5b8cff;
+  box-shadow: 0px 0px 8px rgba(91, 140, 255, 0.4);
+}
+
+/* Button */
 .inputBlock button {
-  padding: 8px 18px;
-  background: #007bff;
+  padding: 10px 20px;
+  width: 250px;
+  font-size: 16px;
   border: none;
+  border-radius: 8px;
+  background: linear-gradient(120deg, #007bff, #0056d6);
   color: white;
-  border-radius: 5px;
   cursor: pointer;
-  margin-left: 40px;
+  transition: 0.25s ease;
+}
+
+.inputBlock button:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(120deg, #0068e0, #004ac0);
 }
 
 .errorText {
-  color: red;
+  color: #e63946;
+  text-align: center;
   font-size: 14px;
 }
-.sahayakWrapper {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+
+/* ============ AUTOCOMPLETE DROPDOWN ============ */
+.searchDropdown {
+  position: absolute;
+  top: 80px;
+  left: 35%;
+  width: 450px;
+  background: #ffffff;
+  border-radius: 12px;
+  max-height: 320px;
+  overflow-y: auto;
+  box-shadow: 0px 8px 25px rgba(0,0,0,0.18);
+  border: 1px solid #e6e6e6;
+  z-index: 99999;
+
+  /* Animation */
+  transform-origin: top;
+  animation: dropdownFade 0.18s ease-out;
 }
 
-.inputBlock {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
+@keyframes dropdownFade {
+  from {
+    opacity: 0;
+    transform: translateY(-5px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0px) scale(1);
+  }
 }
 
+/* Dropdown item */
+.searchItem {
+  padding: 12px;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.searchItem:hover {
+  background: #f5f8ff;
+}
+
+/* Keyboard highlight */
+.highlightItem {
+  background: #e7efff !important;
+}
+
+/* Symbol (big heading) */
+.symbolBig {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1a1a1a;
+  letter-spacing: 0.5px;
+}
+
+/* Company name + industry */
+.subInfo {
+  font-size: 13px;
+  color: #555;
+  margin-top: 3px;
+}
+
+/* ============ NAVIGATION ============ */
 .navBar {
   margin-top: 20px;
   display: flex;
   gap: 20px;
-}
-
-
-
-.errorText {
-  color: red;
-  margin-top: 8px;
-  margin-left: 30px;
-}
-.link{
-    text-decoration: none;
-    color:white;
-    font-size: 20px;
-    font-weight: 300;
-}
-.activeLink {
-  color: #6ff02e;      /* Blue */
-  font-weight: 300;
-  text-decoration: none;
-  font-size: 20px;
-}
-.divider {
-  margin: 0 10px;
-  color: #020707;
-}
-.navBar {
-  margin-top: 15px;
-  text-align: center;
   font-size: 18px;
   font-weight: 600;
 }
 
+.link {
+  text-decoration: none;
+  color: white;
+  font-size: 20px;
+  font-weight: 300;
+}
 
+.activeLink {
+  color: #6ff02e;
+  font-weight: 300;
+  text-decoration: none;
+  font-size: 20px;
+}
 
+.divider {
+  margin: 0 10px;
+  color: #020707;
+}
 
-
-
-
-/* Loader beside OK button */
+/* ============ LOADER ============ */
 .loader {
-  margin-left: 50px;
+  margin-left: 10px;
+  border: 3px solid #eee;
+  border-top: 3px solid #333;
   width: 16px;
   height: 16px;
-  border: 3px solid #ccc;
-  border-top: 3px solid #4f8cff;
   border-radius: 50%;
   display: inline-block;
   animation: spin 0.7s linear infinite;
 }
 
 @keyframes spin {
-  100% { transform: rotate(360deg); }
+  100% {
+    transform: rotate(360deg);
+  }
 }

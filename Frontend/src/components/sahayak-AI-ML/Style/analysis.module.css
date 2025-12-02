@@ -60,6 +60,10 @@
   gap: 6px;
   min-height: 90px;
 }
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.18);
+}
 
 .label {
   font-size: 12px;

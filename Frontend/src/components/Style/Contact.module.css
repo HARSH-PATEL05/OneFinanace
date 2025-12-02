@@ -1,0 +1,155 @@
+
+
+/* INNER SCROLL AREA */
+.scrollArea {
+    width: 100%;
+    height:90vh;
+    padding: 40px 20px;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+    display: flex;
+    justify-content:flex-start;
+    flex-direction: column;
+    gap: 35px;
+    
+    
+}
+
+
+/* Hide scrollbar for Chrome, Edge, Safari */
+.scrollArea::-webkit-scrollbar {
+    width: 0;
+}
+/* Hide scrollbar for Firefox */
+.scrollArea {
+    scrollbar-width: none;
+}
+
+/* ===== CARD BASE STYLE ===== */
+.headerCard,
+.aboutCard,
+.formCard,
+.footer {
+    width: 100%;
+    padding: 25px;
+    border-radius: 16px;
+    min-height: fit-content;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.35);
+}
+
+/* ===== HEADER CARD ===== */
+.headerCard h1 {
+    font-size: 34px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.subHead {
+    font-size: 16px;
+    opacity: 0.88;
+    margin-bottom: 18px;
+}
+
+.infoBox p {
+    font-size: 16px;
+    margin: 5px 0;
+}
+
+/* ===== ABOUT ===== */
+.aboutCard h2 {
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+.aboutCard p {
+    line-height: 1.7;
+    opacity: 0.9;
+}
+
+/* ===== FORM ===== */
+.formCard h2 {
+    font-size: 26px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.contactForm {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.contactForm input,
+.contactForm textarea {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.12);
+    border: 1.5px solid rgb(0, 0, 0);
+    
+    font-size: 15px;
+
+    transition: 0.25s;
+}
+
+.contactForm input:focus,
+.contactForm textarea:focus {
+    outline: none;
+    border-color: #8fc7ff;
+    box-shadow: 0 0 10px rgba(143, 199, 255, 0.4);
+    background: rgba(255, 255, 255, 0.18);
+}
+
+.contactForm textarea {
+    height: 130px;
+    resize: none;
+}
+
+/* BUTTON */
+.contactForm button {
+    padding: 12px;
+    font-size: 17px;
+    border: none;
+    border-radius: 10px;
+
+    background: linear-gradient(135deg, #4e9eff, #005dff);
+    color: white;
+    cursor: pointer;
+
+    transition: 0.25s ease;
+}
+
+.contactForm button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0px 8px 15px rgba(0, 150, 255, 0.4);
+}
+
+/* FOOTER */
+.footer {
+    text-align: center;
+    width:100%;
+    height:200px;
+    font-size: 14px;
+    opacity: 0.8;
+    margin-top: 20px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 500px) {
+    .headerCard h1 {
+        font-size: 28px;
+    }
+    .aboutCard h2,
+    .formCard h2 {
+        font-size: 22px;
+    }
+    .scrollArea {
+        padding: 20px;
+    }
+}
