@@ -23,6 +23,7 @@
 .titleBlock {
   font-size: 25px;
   font-weight: 700;
+  font-family: "Poppins", sans-serif;
 }
 
 /* CLEAR ALL */
@@ -36,6 +37,7 @@
   font-size: 13px;
   font-weight: 600;
 }
+
 .clearAllBtn:hover {
   background: #dc2626;
 }
@@ -85,8 +87,9 @@
   background: #fff;
   cursor: pointer;
   font-size: 18px;
-  
+
 }
+
 .clearFilterBtn {
   padding: 6px 10px;
   background: #f3f4f6;
@@ -96,8 +99,8 @@
   font-size: 13px;
   font-weight: 600;
   color: #374151;
-  width:100px;
-  height:35px;
+  width: 100px;
+  height: 35px;
 }
 
 .clearFilterBtn:hover {
@@ -120,6 +123,7 @@
   height: calc(100% - 160px);
   padding-right: 6px;
 }
+
 .list::-webkit-scrollbar {
   display: none;
 }
@@ -136,39 +140,60 @@
   border-radius: 12px;
   border: 1.7px solid #d0d7de;
   margin-bottom: 12px;
-  box-shadow: 0 4px 14px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
   cursor: pointer;
   transition: 0.2s;
 }
+
 .card:hover {
   transform: translateY(-4px);
-  box-shadow: 0 12px 32px rgba(0,0,0,0.1);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.1);
 }
 
 /* GRID */
 .grid {
   display: grid;
-  grid-template-columns: 1fr 1fr minmax(140px,140px);
+  grid-template-columns: 1fr 1fr minmax(140px, 140px);
   gap: 8px;
 }
-.colRight { display: flex; justify-content: flex-end; }
 
-.bankName { font-size: 16px; font-weight: 700; }
-.txnType { font-weight: 700; }
-.creditAmount,.creditText {
-  color: #068525;   /* green */
-  font-weight: 600;
+.colRight {
+  display: flex;
+  justify-content: flex-end;
 }
 
-.debitAmount,.debitText {
-  color: #c30303;   /* red */
+.bankName {
+  font-size: 13px;
+  font-weight: 700;
+  font-family: "Montserrat", sans-serif;
+}
+
+.txnType {
+  font-weight: 700;
+}
+
+.creditAmount,
+.creditText {
+  color: #068525;
+  /* green */
   font-weight: 600;
+  font-family: "Rubik", sans-serif;
+}
+
+.debitAmount,
+.debitText {
+  color: #c30303;
+  /* red */
+  font-weight: 600;
+  font-family: "Rubik", sans-serif;
+  font-size: 1rem;
 }
 
 
 .details {
   font-size: 13px;
   color: #374151;
+  font-family: "Roboto", sans-serif;
 }
 
 .amount {
@@ -177,29 +202,32 @@
 }
 
 .balance {
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 900;
+  font-family: "Roboto", sans-serif;
 }
 
 /* FULL MODAL */
 .modalOverlay {
   position: fixed;
   inset: 0;
-  background: rgba(0,0,0,0.55);
+  background: rgba(0, 0, 0, 0.55);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 50000;
 }
+
 .modalBox {
   background: white;
   padding: 18px;
   border-radius: 12px;
-  width: min(760px,90%);
+  width: min(760px, 90%);
   max-height: 90vh;
   overflow-y: auto;
   position: relative;
 }
+
 .modalClose {
   position: absolute;
   right: 12px;
@@ -216,7 +244,7 @@
 .sectionOverlay {
   position: absolute;
   inset: 0;
-  background: rgba(0,0,0,0.35);
+  background: rgba(0, 0, 0, 0.35);
   z-index: 8000;
 }
 
@@ -229,7 +257,7 @@
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
   z-index: 9000;
 }
 
@@ -255,6 +283,7 @@
   font-weight: 600;
   transition: 0.2s;
 }
+
 .centerItem:hover {
   background: #e2e8f0;
 }
@@ -269,7 +298,7 @@
   transform: translate(-50%, -50%);
   background: #fff;
   border-radius: 12px;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
   z-index: 9000;
 }
 
@@ -282,6 +311,7 @@
   font-weight: 600;
   text-align: center;
 }
+
 .dateOption:hover {
   background: #e2e8f0;
 }
@@ -318,8 +348,12 @@
 
 /* Responsive */
 @media (max-width: 720px) {
-  .grid { grid-template-columns: 1fr; }
-  .dateModal, .downloadCenterModal {
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .dateModal,
+  .downloadCenterModal {
     width: 92%;
   }
 }

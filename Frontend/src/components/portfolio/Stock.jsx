@@ -5,7 +5,7 @@ import {
     fetchAllPortfolios,
     fetchLiveHoldingsLTP,
     fetchDailyStockSnapshot,
-    fetchMarketStatus       // <--- NEW
+    fetchMarketStatus       
 } from "@/Api";
 
 function Stock() {
@@ -54,7 +54,7 @@ function Stock() {
             const data = await fetchAllPortfolios();
             setAllHoldings(data);
             // extract unique broker names
-            const brokers = Object.keys(data);   // because your API returns { brokerName: {mfs:[]}}
+            const brokers = Object.keys(data);  
             
 
             // assign colors
@@ -200,7 +200,7 @@ function Stock() {
     return (
         <div className={style.main}>
             <div className={style.Allstock}>
-                <h2>Overall Investment</h2>
+                <h2>OVERALL INVESTMENT</h2>
                 <div className={style.grid}>
                     <div className={style.Dashboard}>
                         <h3>Total Invested</h3>
@@ -234,7 +234,7 @@ function Stock() {
                         disabled={loading}
                         className={style.RefreshButton}
                     >
-                        {loading ? "Refreshing..." : "Refresh"}
+                        {loading ? "REFRESHING..." : "REFRESH"}
                     </button>
 
                 </div>

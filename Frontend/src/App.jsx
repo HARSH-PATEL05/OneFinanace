@@ -27,14 +27,14 @@ function App() {
     <>
       <div className='main'>
         <div className='logo'>
-          <img src="/Images/OneFinance-logo.png" alt="no img" />
+          <img src="/Images/OneFinance-logo-white.png" alt="no img" />
         </div>
 
         <div className='nav'>
-          <div><NavLink className="link" to="/">Accounts</NavLink></div> |
-          <div><NavLink className="link" to="/Sahayak">Sahayak</NavLink></div> |
-          <div><NavLink className="link" to="/Portfolio">Portfolio</NavLink></div> |
-          <div><NavLink className="link" to="/Contact">Contact</NavLink></div>
+          <div><NavLink className="link" to="/">ACCOUNTS</NavLink></div> |
+          <div><NavLink className="link" to="/Sahayak">SAHAYAK</NavLink></div> |
+          <div><NavLink className="link" to="/Portfolio">PORTFOLIO</NavLink></div> |
+          <div><NavLink className="link" to="/Contact">CONTACT</NavLink></div>
         </div>
 
         <div className='btn-class'>

@@ -1,73 +1,92 @@
-
-.main{
-    width:100%;
-    height:80vh;
-    display:flex;
+.main {
+    width: 100%;
+    height: 83vh;
+    display: flex;
 
 }
-.Allstock{
-    width:30%;
-    height:100%;
+
+.Allstock {
+    width: 30%;
+    height: 100%;
     border-right: 2px solid black;
-    
-}
-.Cards{
-   width:70%;
-   height:100%;
-   overflow-y: scroll ;
-   scrollbar-width: none;
-   scroll-behavior: smooth;
-   
-   
 
 }
-.Cards ul{
 
-     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 10px; 
+.Cards {
+    width: 70%;
+    height: 100%;
+    overflow-y: scroll;
+    scrollbar-width: none;
+    scroll-behavior: smooth;
+
+
+
+}
+
+.Cards ul {
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
     padding: 0;
     margin: 0;
-}
-.Cards ul li{
-    list-style: none;
-    
-}
-.Allstock{
-    padding:1% 1%;
-    
+
 
 }
-.flex{
+
+.Cards ul li {
+    list-style: none;
+
+}
+
+.Allstock {
+    padding: 1% 1%;
+    font-family: "Poppins";
+
+}
+
+.flex {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
 }
-.grid{
+
+.grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr); 
-    gap: 10px; 
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    font-family: "Poppins", sans-serif;
+    margin-top: 15px;
+    padding: 5px 0px 0px 5px;
 }
 
-.Dashboard{
-    height:60px;
+.Dashboard {
+    height: 60px;
     width: 90%;
-    margin:1% 2%;
+    margin: 1% 2%;
     padding: 1% 1%;
     border: 1px solid rgba(162, 164, 235, 1);
-    border-radius: 2px;
+    border-radius: 0.5rem;
     box-sizing: border-box;
-    box-shadow: 0 0 4px 4px  rgba(162, 164, 235, 0.637);
+    box-shadow: 0 0 4px 4px rgba(162, 164, 235, 0.637);
 }
+
 .green {
-  color: #0f8107;   /* soft green */
-  font-weight: 600;
+    color: #0f8107;
+    /* soft green */
+    font-weight: 600;
 }
 
 .red {
-  color: #d90a0a;   /* soft red */
-  font-weight: 600;
+    color: #d90a0a;
+    /* soft red */
+    font-weight: 600;
 }
 
+.RefreshButton {
+    font-family: "Poppins", sans-serif;
+    font-weight: 600;
+    position: relative;
+    left: 45%;
 
-
+}

@@ -229,16 +229,16 @@ function Portfolio() {
       </div>
 
       {/* Navigation */}
-      <nav>
+      <nav className= {style.nav1}>
         <div>
           <NavLink className={style.link} to="Stock">
-            Stocks
+            STOCKS
           </NavLink>
         </div>
         |
         <div>
           <NavLink className={style.link} to="Mf">
-            Mfs
+            MUTUAL FUNDS
           </NavLink>
         </div>
       </nav>

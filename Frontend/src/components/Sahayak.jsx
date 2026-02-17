@@ -158,7 +158,7 @@ export default function Sahayak() {
                         isActive ? style.activeLink : style.link
                     }
                 >
-                    Fundamental
+                    FUNDAMENTAL
                 </NavLink>
 
                 <span className={style.divider}>|</span>
@@ -169,7 +169,7 @@ export default function Sahayak() {
                         isActive ? style.activeLink : style.link
                     }
                 >
-                    Analysis
+                    ANALYSIS
                 </NavLink>
             </nav>
 

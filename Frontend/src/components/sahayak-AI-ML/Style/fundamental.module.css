@@ -44,6 +44,7 @@
   color: #141414;
   border-left: 4px solid #4f8cff;
   padding-left: 12px;
+  font-family: "Poppins";
 }
 
 /*************************************************
@@ -71,6 +72,7 @@
 
   min-height: 110px;
   transition: transform 0.15s ease, box-shadow 0.2s ease;
+  font-family: 'Montserrat';
 }
 
 .card:hover {
@@ -85,6 +87,7 @@
   font-size: 14px;
   color: #555;
   font-weight: 600;
+  font-family: 'Poppins';
 }
 
 /*************************************************

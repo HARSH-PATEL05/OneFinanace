@@ -1,0 +1,182 @@
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Thin.ttf"); font-weight: 100; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-ThinItalic.ttf"); font-weight: 100; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Light.ttf"); font-weight: 300; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-LightItalic.ttf"); font-weight: 300; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Regular.ttf"); font-weight: 400; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Italic.ttf"); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Medium.ttf"); font-weight: 500; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-MediumItalic.ttf"); font-weight: 500; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-SemiBold.ttf"); font-weight: 600; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-SemiBoldItalic.ttf"); font-weight: 600; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-BoldItalic.ttf"); font-weight: 700; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-ExtraBold.ttf"); font-weight: 800; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-ExtraBoldItalic.ttf"); font-weight: 800; font-style: italic; }
+
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-Black.ttf"); font-weight: 900; }
+@font-face { font-family: "Montserrat"; src: url("../assets/fonts/Montserrat/Montserrat-BlackItalic.ttf"); font-weight: 900; font-style: italic; }
+
+
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Thin.ttf"); font-weight: 100; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-ThinItalic.ttf"); font-weight: 100; font-style: italic; }
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Light.ttf"); font-weight: 300; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-LightItalic.ttf"); font-weight: 300; font-style: italic; }
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Regular.ttf"); font-weight: 400; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Italic.ttf"); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Medium.ttf"); font-weight: 500; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-MediumItalic.ttf"); font-weight: 500; font-style: italic; }
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-BoldItalic.ttf"); font-weight: 700; font-style: italic; }
+
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-Black.ttf"); font-weight: 900; }
+@font-face { font-family: "Roboto"; src: url("../assets/fonts/Roboto/Roboto-BlackItalic.ttf"); font-weight: 900; font-style: italic; }
+
+
+
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Light.ttf"); font-weight: 300; }
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-LightItalic.ttf"); font-weight: 300; font-style: italic; }
+
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Regular.ttf"); font-weight: 400; }
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Italic.ttf"); font-weight: 400; font-style: italic; }
+
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Medium.ttf"); font-weight: 500; }
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-MediumItalic.ttf"); font-weight: 500; font-style: italic; }
+
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Bold.ttf"); font-weight: 700; }
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-BoldItalic.ttf"); font-weight: 700; font-style: italic; }
+
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-Black.ttf"); font-weight: 900; }
+@font-face { font-family: "Rubik"; src: url("../assets/fonts/Rubik/Rubik-BlackItalic.ttf"); font-weight: 900; font-style: italic; }
+
+
+/* =========================
+   POPPINS FONT FAMILY
+========================= */
+
+/* Thin */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Thin.ttf");
+  font-weight: 100;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-ThinItalic.ttf");
+  font-weight: 100;
+  font-style: italic;
+}
+
+/* Extra Light */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-ExtraLight.ttf");
+  font-weight: 200;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-ExtraLightItalic.ttf");
+  font-weight: 200;
+  font-style: italic;
+}
+
+/* Light */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Light.ttf");
+  font-weight: 300;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-LightItalic.ttf");
+  font-weight: 300;
+  font-style: italic;
+}
+
+/* Regular */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Regular.ttf");
+  font-weight: 400;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Italic.ttf");
+  font-weight: 400;
+  font-style: italic;
+}
+
+/* Medium */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Medium.ttf");
+  font-weight: 500;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-MediumItalic.ttf");
+  font-weight: 500;
+  font-style: italic;
+}
+
+/* Semi Bold */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-SemiBold.ttf");
+  font-weight: 600;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-SemiBoldItalic.ttf");
+  font-weight: 600;
+  font-style: italic;
+}
+
+/* Bold */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Bold.ttf");
+  font-weight: 700;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-BoldItalic.ttf");
+  font-weight: 700;
+  font-style: italic;
+}
+
+/* Extra Bold */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-ExtraBold.ttf");
+  font-weight: 800;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-ExtraBoldItalic.ttf");
+  font-weight: 800;
+  font-style: italic;
+}
+
+/* Black */
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-Black.ttf");
+  font-weight: 900;
+}
+@font-face {
+  font-family: "Poppins";
+  src: url("../assets/fonts/Poppins/Poppins-BlackItalic.ttf");
+  font-weight: 900;
+  font-style: italic;
+}

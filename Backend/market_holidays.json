@@ -1,67 +1,82 @@
 [
     {
-        "date": "2025-02-26",
-        "name": "Mahashivratri",
-        "day": "Wednesday"
-    },
-    {
-        "date": "2025-03-14",
-        "name": "Holi",
-        "day": "Friday"
-    },
-    {
-        "date": "2025-03-31",
-        "name": "Id-Ul-Fitr (Ramadan Eid)",
-        "day": "Monday"
-    },
-    {
-        "date": "2025-04-10",
-        "name": "Shri Mahavir Jayanti",
+        "date": "2026-01-15",
+        "name": "Municipal Corporation Election",
         "day": "Thursday"
     },
     {
-        "date": "2025-04-14",
-        "name": "Dr. Baba Saheb Ambedkar Jayanti",
+        "date": "2026-01-26",
+        "name": "Republic Day",
         "day": "Monday"
     },
     {
-        "date": "2025-04-18",
+        "date": "2026-03-03",
+        "name": "Holi",
+        "day": "Tuesday"
+    },
+    {
+        "date": "2026-03-26",
+        "name": "Ram Navami",
+        "day": "Thursday"
+    },
+    {
+        "date": "2026-03-31",
+        "name": "Mahavir Jayanti",
+        "day": "Tuesday"
+    },
+    {
+        "date": "2026-04-03",
         "name": "Good Friday",
         "day": "Friday"
     },
     {
-        "date": "2025-05-01",
-        "name": "Maharashtra Day",
-        "day": "Thursday"
+        "date": "2026-04-14",
+        "name": "Dr. Baba Saheb Ambedkar Jayanti",
+        "day": "Tuesday"
     },
     {
-        "date": "2025-08-15",
-        "name": "Independence Day",
+        "date": "2026-05-01",
+        "name": "Maharashtra Day",
         "day": "Friday"
     },
     {
-        "date": "2025-08-27",
+        "date": "2026-05-28",
+        "name": "Bakri Id / Eid-ul-Adha",
+        "day": "Thursday"
+    },
+    {
+        "date": "2026-06-26",
+        "name": "Muharram",
+        "day": "Friday"
+    },
+    {
+        "date": "2026-09-14",
         "name": "Ganesh Chaturthi",
-        "day": "Wednesday"
+        "day": "Monday"
     },
     {
-        "date": "2025-10-02",
-        "name": "Mahatma Gandhi Jayanti/Dussehra",
-        "day": "Thursday"
+        "date": "2026-10-02",
+        "name": "Gandhi Jayanti",
+        "day": "Friday"
     },
     {
-        "date": "2025-10-22",
+        "date": "2026-10-20",
+        "name": "Dussehra",
+        "day": "Tuesday"
+    },
+    {
+        "date": "2026-11-10",
         "name": "Diwali-Balipratipada",
-        "day": "Wednesday"
+        "day": "Tuesday"
     },
     {
-        "date": "2025-11-05",
-        "name": "Prakash Gurpurb Sri Guru Nanak Dev",
-        "day": "Wednesday"
+        "date": "2026-11-24",
+        "name": "Guru Nanak Jayanti",
+        "day": "Tuesday"
     },
     {
-        "date": "2025-12-25",
+        "date": "2026-12-25",
         "name": "Christmas",
-        "day": "Thursday"
+        "day": "Friday"
     }
 ]

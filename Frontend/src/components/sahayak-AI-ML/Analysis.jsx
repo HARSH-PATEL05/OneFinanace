@@ -482,7 +482,7 @@ export default function Analysis() {
                 
             {/* Overview */}
             <div className={style.section}>
-                <h3 className={style.sectionTitle}>OVERVIEW</h3>
+                <h3 className={style.sectionTitle}>Overview</h3>
                 <div className={style.fieldGrid}>
                     <div className={style.card}><label className={style.label}>LAST PRICE</label><input readOnly className={style.inputBox} value={last_price ?? "—"} /></div>
                     <div className={style.card}><label className={style.label}>LAST DATE</label><input readOnly className={style.inputBox} value={last_date ?? "—"} /></div>
@@ -492,7 +492,7 @@ export default function Analysis() {
                 </div>
             </div>
 
-            {movement && renderSection("MOVEMENT PREDICTION DETAILS", {
+            {movement && renderSection("Movement Prediction Details", {
                 movement_prediction: movement.movement_prediction,
                 movement_confidence: movement.movement_confidence,
                 votes_RF: movement.votes?.RF,
@@ -500,7 +500,7 @@ export default function Analysis() {
                 votes_XGB: movement.votes?.XGB,
             })}
 
-            {price_prediction && renderSection("PRICE PREDICTION DETAILS", {
+            {price_prediction && renderSection("Price Prediction Details", {
                 last_close: price_prediction.last_close,
                 predicted_return: price_prediction.predicted_return,
                 predicted_close: price_prediction.predicted_close,
@@ -509,17 +509,17 @@ export default function Analysis() {
                 models_used: price_prediction.models_used,
             })}
 
-            {technical && renderSection("TECHNICAL SNAPSHOT", technical)}
-            {trend && renderSection("TREND SNAPSHOT", trend)}
+            {technical && renderSection("Technical Snapshot", technical)}
+            {trend && renderSection("Trend Snapshot", trend)}
 
-            {levels?.pivot_levels && renderSection("PIVOT LEVELS (NUMERIC)", levels.pivot_levels)}
+            {levels?.pivot_levels && renderSection("Pivot Levels (NUMERIC)", levels.pivot_levels)}
 
-            {levels?.swing_levels && renderSection("SWING LEVELS (NUMERIC)", {
+            {levels?.swing_levels && renderSection("Swing Levels (NUMERIC)", {
                 supports: formatNumber(swingLevels?.supports),
                 resistances: formatNumber(swingLevels?.resistances),
             })}
 
-            {levels?.multi_tf_levels && renderSection("MULTI TIMEFRAME LEVELS (NUMERIC)", {
+            {levels?.multi_tf_levels && renderSection("Multi Timeframe Levels (NUMERIC)", {
                 supports: formatNumber(multiTfLevels?.supports),
                 resistances: formatNumber(multiTfLevels?.resistances),
             })}
@@ -527,10 +527,10 @@ export default function Analysis() {
             {/* Charts */}
             {mappedCharts && (
                 <div className={style.section}>
-                    <h3 className={style.sectionTitle}>CHARTS</h3>
+                    <h3 className={style.sectionTitle}>Charts</h3>
                     <div className={style.chartGrid}>
                         {chartConfigs.map((c) => (
-                            <ChartCard
+                            <ChartCard 
                                 key={c.id}
                                 title={c.title}
                                 description={c.description}
@@ -546,7 +546,7 @@ export default function Analysis() {
 
             {/* Summary */}
             <div className={style.section}>
-                <h3 className={style.sectionTitle}>AI SUMMARY</h3>
+                <h3 className={style.sectionTitle}>AI Summary</h3>
                 <textarea className={style.summaryBox} readOnly value={summary || "—"} />
             </div>
 

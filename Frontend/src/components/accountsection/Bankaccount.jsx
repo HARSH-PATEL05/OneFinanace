@@ -227,7 +227,7 @@ export default function Bankaccount() {
   return (
     <>
       <div className={style.main}>
-        <h2>Accounts</h2>
+        <h2 className={style.account}>Accounts</h2>
 
         {/* Filter */}
         <div className={style.filterContainer}>
