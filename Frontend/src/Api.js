@@ -205,3 +205,16 @@ export const getFundamentals = async (symbol) => {
     throw err;
   }
 };
+/*
+*/
+export const fetchFilteredStocks = async (filterData) => {
+    const res = await fetch("http://localhost:8000/stocks/filter", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(filterData)
+    });
+
+    return res.json();
+};

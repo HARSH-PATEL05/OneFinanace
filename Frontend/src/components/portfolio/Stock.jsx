@@ -5,7 +5,8 @@ import {
     fetchAllPortfolios,
     fetchLiveHoldingsLTP,
     fetchDailyStockSnapshot,
-    fetchMarketStatus       
+    fetchMarketStatus,
+    fetchFilteredStocks
 } from "@/Api";
 
 function Stock() {
@@ -14,7 +15,10 @@ function Stock() {
     const [loading, setLoading] = useState(false);
     const [marketStatus, setMarketStatus] = useState("unknown");
     const [brokerColors, setBrokerColors] = useState({});
-
+    const [indicator, setIndicator] = useState("rsi");
+    const [condition, setCondition] = useState(null);
+    const [customRange, setCustomRange] = useState({ min: "", max: "" });
+    const [filteredStocks, setFilteredStocks] = useState([]);
     const runDailySnapshotIfNeeded = async () => {
         const today = new Date().toDateString();
         const lastRun = localStorage.getItem("daily_snapshot_stock");
@@ -54,8 +58,8 @@ function Stock() {
             const data = await fetchAllPortfolios();
             setAllHoldings(data);
             // extract unique broker names
-            const brokers = Object.keys(data);  
-            
+            const brokers = Object.keys(data);
+
 
             // assign colors
             const colors = {};
@@ -197,6 +201,59 @@ function Stock() {
         if (num < 0) return `-${Math.abs(num).toFixed(2)}%`;
         return "0.00%";
     };
+    const indicatorOptions = {
+        rsi: [
+            { label: "Oversold (<30) (Bounce Expected)", type: "<", value: 30 },
+            { label: "Weak (30-50)", type: "between", min: 30, max: 50 },
+            { label: "Strong (50-70)", type: "between", min: 50, max: 70 },
+            { label: "Overbought (>70) (Possible Fall)", type: ">", value: 70 }
+        ],
+        volume: [
+            { label: "High Demand (>2x Avg)", type: ">", value: 2 },
+            { label: "Normal Volume", type: "between", min: 0.5, max: 2 }
+        ],
+        macd: [
+            { label: "Bullish (MACD > Signal)", type: ">", value: 0 },
+            { label: "Bearish (MACD < Signal)", type: "<", value: 0 }
+        ],
+        ma: [
+            { label: "Above 50DMA (Bullish)", type: ">", value: "ma50" },
+            { label: "Above 200DMA (Strong Trend)", type: ">", value: "ma200" }
+        ]
+    };
+    const applyFilter = () => {
+        const allStocksFlat = Object.entries(allHoldings)
+            .flatMap(([brokerName, brokerData]) =>
+                brokerData.holdings.map((stock) => ({
+                    ...stock,
+                    broker: brokerName
+                }))
+            );
+
+        const result = allStocksFlat.filter((stock) => {
+            let val;
+
+            if (indicator === "rsi") val = stock.rsi ?? 50;
+            if (indicator === "price") val = ltpMap[stock.symbol] ?? stock.Ltp;
+            if (indicator === "volume") val = stock.volume ?? 1;
+            if (indicator === "macd") val = stock.macd ?? 0;
+
+            if (!condition) return false;
+
+            if (condition.type === "<") return val < condition.value;
+            if (condition.type === ">") return val > condition.value;
+
+            if (condition.type === "between") {
+                const min = customRange.min || condition.min;
+                const max = customRange.max || condition.max;
+                return val >= min && val <= max;
+            }
+
+            return false;
+        });
+
+        setFilteredStocks(result);
+    };
     return (
         <div className={style.main}>
             <div className={style.Allstock}>
@@ -238,6 +295,82 @@ function Stock() {
                     </button>
 
                 </div>
+                <div className={style.FilterBox}>
+                    <h3>📊 Smart Filter</h3>
+
+                    {/* Indicator */}
+                    <select
+                        value={indicator}
+                        onChange={(e) => {
+                            setIndicator(e.target.value);
+                            setCondition(null);
+                        }}
+                    >
+                        <option value="rsi">RSI</option>
+                        <option value="volume">Volume</option>
+                        <option value="macd">MACD</option>
+                        <option value="price">Price</option>
+                    </select>
+
+                    {/* Condition */}
+                    <select
+                        onChange={(e) => {
+                            const index = e.target.value;
+                            setCondition(indicatorOptions[indicator][index]);
+                        }}
+                    >
+                        <option>Select Condition</option>
+                        {indicatorOptions[indicator].map((opt, i) => (
+                            <option key={i} value={i}>
+                                {opt.label}
+                            </option>
+                        ))}
+                    </select>
+
+                    {/* BETWEEN INPUT */}
+                    {condition?.type === "between" && (
+                        <div className={style.rangeInputs}>
+                            <input
+                                type="number"
+                                placeholder="Min"
+                                value={customRange.min}
+                                onChange={(e) =>
+                                    setCustomRange({ ...customRange, min: e.target.value })
+                                }
+                            />
+                            <input
+                                type="number"
+                                placeholder="Max"
+                                value={customRange.max}
+                                onChange={(e) =>
+                                    setCustomRange({ ...customRange, max: e.target.value })
+                                }
+                            />
+                        </div>
+                    )}
+
+                    <button onClick={applyFilter}>Apply</button>
+
+                    {/* SUMMARY */}
+                    {condition && (
+                        <p className={style.summaryText}>{condition.label}</p>
+                    )}
+
+                    {/* RESULTS */}
+                    <div className={style.filteredList}>
+                        {filteredStocks.map((stock, index) => {
+                            const ltp = ltpMap[stock.symbol] ?? stock.Ltp;
+
+                            return (
+                                <div key={index} className={style.filterCard}>
+                                    <h4>{stock.symbol}</h4>
+                                    <p>Price: ₹{ltp}</p>
+                                    <p>Qty: {stock.Qty}</p>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
             </div>
 
             <div className={style.Cards}>
@@ -249,7 +382,7 @@ function Stock() {
                         .map((item, index) => (
                             <li key={index}>
                                 <StocksCard
-                                    symbol={item.broker}                                        
+                                    symbol={item.broker}
                                     name={item.stock.name}
                                     Qty={item.stock.Qty}
                                     Avg={item.stock.average_price}
@@ -257,7 +390,7 @@ function Stock() {
                                         ? ltpMap[item.stock.symbol]
                                         : item.stock.Ltp
                                     }
-                                    brokerColor={brokerColors[item.broker]}                   
+                                    brokerColor={brokerColors[item.broker]}
                                 />
                             </li>
                         ))}

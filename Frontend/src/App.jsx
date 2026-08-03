@@ -1,4 +1,5 @@
 import './App.css'
+import ChatBubble from "./components/sahayak/ChatBubble";
 import { Route, Routes, NavLink } from 'react-router-dom'
 import Portfolio from './components/Portfolio'
 import Contact from './components/Contact'
@@ -61,6 +62,7 @@ function App() {
         </Route>
         <Route path="*" element={<Error404 />} />
       </Routes>
+      <ChatBubble />
     </>
   );
 }

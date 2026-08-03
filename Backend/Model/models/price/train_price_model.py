@@ -36,8 +36,8 @@ except:
     XGB_AVAILABLE = False
 
 # Directories
-DATA_DIR = "data/data/core_market_10yr"
-MODEL_DIR = "models/price/"
+DATA_DIR = ROOT / "data" / "data" / "core_market_10yr"
+MODEL_DIR = ROOT / "models" / "price"
 
 
 # ---------------------------------------------------------
@@ -49,10 +49,10 @@ def load_all_csv() -> pd.DataFrame:
     frames = []
     count = 0
 
-    for file in os.listdir(DATA_DIR):
+    for file in os.listdir(str(DATA_DIR)):
         if file.endswith(".csv"):
 
-            df = pd.read_csv(os.path.join(DATA_DIR, file))
+            df = df = pd.read_csv(DATA_DIR / file)
             df = df.rename(str.title, axis="columns")
 
             if not {"Open", "High", "Low", "Close", "Volume"}.issubset(df.columns):

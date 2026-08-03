@@ -34,7 +34,8 @@ from app.routers.smsparser_data_route import router as smsparser_data_router
 from app.routers.account_route import router as account_router
 from app.routers.live_updater_routes import router as live_updater_routes
 from app.routers.AI_Model_Analysis_route import router as AI_Model_Analysis_route
-
+from app.routers.ai_chat_route import router as chat_router
+from app.routers.filter_api import router as filter_router
 # Sync engine
 from app.crud import process_all_unsynced_transactions
 
@@ -51,7 +52,8 @@ app.include_router(smsparser_data_router)
 app.include_router(account_router)
 app.include_router(live_updater_routes)
 app.include_router(AI_Model_Analysis_route)
-
+app.include_router(chat_router, prefix="/api")
+app.include_router(filter_router, prefix="/stocks")
 # CORS (add more origins as needed)
 app.add_middleware(
     CORSMiddleware,
